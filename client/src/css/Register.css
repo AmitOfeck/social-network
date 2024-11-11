@@ -1,0 +1,49 @@
+.register-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .register-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .register-container label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+  }
+  
+  .register-container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .register-container button {
+    background-color: #4c75f6; /* צבע סגול עדין */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .register-container button:hover {
+    background-color: #5e4ae3; /* צבע כהה יותר */
+  }
+
+
+
+  
