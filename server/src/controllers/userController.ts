@@ -30,13 +30,13 @@ export const registerUser = async (req: Request, res: Response) => {
     const savedUser = await newUser.save();
 
     // יצירת JWT (אחרת לא נדרש, אבל אפשר אם צריך לשלוח לאדם את ה-token)
-    const token = jwt.sign({ userId: savedUser._id }, 'your-secret-key', {
+    const accessToken = jwt.sign({ userId: savedUser._id }, 'your-secret-key', {
       expiresIn: '5h',
     });
 
     res.status(201).json({
       message: 'User registered successfully',
-      token,
+      accessToken,
       user: savedUser,
     });
   } catch (error: unknown) {
