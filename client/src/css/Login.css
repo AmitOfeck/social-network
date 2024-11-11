@@ -1,0 +1,140 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* כללי */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #969abc, #a5a5f7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  /* קונטיינר של ה-login */
+  .login-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+  }
+  
+  /* כותרת */
+  h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* טופס */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* לייבל של שדה */
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+  }
+  
+  /* שדות קלט */
+  .input-field {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f8f9fd;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* שינוי צבע בעת focus */
+  .input-field:focus {
+    border-color: #4c75f6;
+    outline: none;
+    background-color: #fff;
+  }
+  
+  /* שינוי צבע בעת hover */
+  .input-field:hover {
+    border-color: #a0b2ff;
+    background-color: #f1f6ff;
+  }
+  
+  /* כפתור התחברות */
+  .login-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4c75f6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #3650d6;
+    transform: translateY(-2px);
+  }
+  
+  .login-button:active {
+    background-color: #2b3bba;
+    transform: translateY(0);
+  }
+  
+  /* כפתור של Google */
+  .google-login-container {
+    margin-top: 30px;
+  }
+  
+  /* כפתור Google */
+  .google-login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4285f4;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .google-login-button:hover {
+    background-color: #357ae8;
+  }
+  
+  /* עיצוב לסמל של Google */
+  .google-login-button img {
+    width: 20px;
+    margin-right: 10px;
+  }
+  
+  /* טקסט "או" בין כפתור גוגל לכפתור התחברות */
+  .or-text {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+  }
+
+  
+  
