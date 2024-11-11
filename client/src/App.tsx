@@ -10,6 +10,7 @@ function App() {
       <h1>Welcome to the App</h1>
       {/* <Register /> */}
       {/* <Login /> */}
+      <Register />
       <Login /> 
     </div>
   );
