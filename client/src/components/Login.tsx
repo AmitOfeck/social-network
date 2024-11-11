@@ -8,7 +8,7 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login with email:', email, 'and password:', password);
+    console.log('Login with email:', email, 'and password:', password);    {/* need to api call */}
   };
 
   const handleGoogleLoginSuccess = (response: any) => {
