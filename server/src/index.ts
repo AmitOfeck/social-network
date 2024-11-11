@@ -2,10 +2,15 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
+import bodyParser from 'body-parser';
+
 
 
 const app = express();
 const PORT = 4000;
+
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 
 mongoose

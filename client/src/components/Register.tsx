@@ -1,32 +1,22 @@
 import React, { useState } from 'react';
-import '../css/Register.css'
-import '../css/Login.css'
+import '../css/Register.css';
+import '../css/Login.css';
+import { registerUser } from '../utils/RegisterUtils';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('name', name);
-    if (image) formData.append('image', image);
-
     try {
-      // כאן תעשה קריאה ל- API כדי לשלוח את הנתונים
-      const response = await fetch('http://localhost:3000/api/register', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
+      // Calling the registerUser function and passing individual fields
+      const result = await registerUser(email, password, name, image);
       console.log(result);
-      // טיפול בתגובה אחרי הרשמה (למשל הפניית המשתמש)
+      // Handle the response (e.g., redirect the user, store token, etc.)
     } catch (error) {
       console.error('Error during register:', error);
     }
@@ -35,7 +25,11 @@ const Register = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result as string); // Converting image to base64 or URL
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -77,7 +71,7 @@ const Register = () => {
           Profile Picture:
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
-        <button type="submit" >Register</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );
