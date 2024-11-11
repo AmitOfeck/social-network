@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'; // הוספתי את GoogleOAuthProvider
 import '../css/Login.css';
+import { loginUser } from '../utils/LoginUtils';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login with email:', email, 'and password:', password);    {/* need to api call */}
+    try {
+      const result = await loginUser(email, password);
+      console.log('Login success:', result);
+      localStorage.setItem('accessToken', result.accessToken);
+      localStorage.setItem('refreshToken', result.refreshToken);
+    } catch (err) {
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage('An unknown error occurred');
+      }
+    }
   };
 
   const handleGoogleLoginSuccess = (response: any) => {
