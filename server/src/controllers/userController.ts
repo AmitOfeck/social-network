@@ -79,10 +79,12 @@ export const loginUser = async (req: Request, res: Response) => {
       }
   
       // יצירת JWT עבור המשתמש המחובר
-      const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
+      const accessToken = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '7h' });
+      const refreshToken = jwt.sign({ userId: user._id }, 'your-refresh-secret-key', { expiresIn: '7d' });
+
   
       // שלח את ה-token בתשובה
-      res.status(200).json({ token });
+      res.status(200).json({ accessToken , refreshToken });
     } catch (error) {
       res.status(500).json({ error: 'Server error' });
     }

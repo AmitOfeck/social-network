@@ -15,17 +15,13 @@ router.post('/register', async (req, res) => {
 
 
 // נתיב להתחברות
-router.post('/login', (req, res) => {
-    loginUser(req, res)
-      .then(() => {
-        // תוכל להוסיף כאן את הטיפול במקרה של הצלחה
-        res.status(200).json({ message: 'Login successful' });
-      })
-      .catch((error) => {
-        // טיפול בשגיאה במקרה של חיבור לא נכון או כל שגיאה אחרת
-        res.status(400).json({ error: 'Invalid credentials' });
-      });
-  });
+router.post('/login', async (req, res) => {
+  try {
+      await loginUser(req, res); // קורא לפונקציה loginUser, אשר מטפלת בתגובה בעצמה
+  } catch (error) {
+      res.status(400).json({ error: 'Invalid credentials' });
+  }
+});
 
 
 // אם יש צורך בנתיב שמצריך אימות, נוכל להוסיף את המידלוואר verifyToken
