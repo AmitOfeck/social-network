@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { registerUserService, loginUserService } from '../services/userServices';
 
-// פונקציה להרשמה
+
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { email, password, name, image, googleId } = req.body;
@@ -26,7 +26,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-// פונקציה להתחברות
+
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
