@@ -13,11 +13,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      // Calling the registerUser function and passing individual fields
       const result = await registerUser(email, password, name, image);
-      console.log(result);
-      localStorage.setItem('accessToken', result.accessToken);
-      // Handle the response (e.g., redirect the user, store token, etc.)
     } catch (error) {
       console.error('Error during register:', error);
     }

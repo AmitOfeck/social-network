@@ -28,11 +28,7 @@ export const registerUserService = async (
 
     const savedUser = await newUser.save();
 
-    const accessToken = jwt.sign({ userId: savedUser._id }, 'your-secret-key', {
-      expiresIn: '5h',
-    });
-
-    return { accessToken, user: savedUser };
+    return { user: savedUser };
   } catch (error) {
     throw new Error('Error registering user');
   }
@@ -52,8 +48,6 @@ export const loginUserService = async (email: string, password: string) => {
       if (!isMatch) {
         return { error: 'Invalid credentials' };
       }
-    } else {
-      return { error: 'Invalid credentials' };
     }
 
     const accessToken = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '7h' });
