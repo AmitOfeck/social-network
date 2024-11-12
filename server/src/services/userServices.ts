@@ -4,35 +4,32 @@ import User from '../models/userModel';
 
 
 export const registerUserService = async (
-  email: string,
-  password: string,
-  name: string,
-  image: string | null,
-  googleId: string | null
-) => {
-  try {
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return { error: 'Email already exists' };
+    email: string,
+    password: string,
+    name: string,
+    imagePath: string | null 
+  ) => {
+    try {
+      const userExists = await User.findOne({ email });
+      if (userExists) {
+        return { error: 'Email already exists' };
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const newUser = new User({
+        email,
+        password: hashedPassword,
+        name,
+        image: imagePath, 
+      });
+  
+      const savedUser = await newUser.save();
+      return { user: savedUser };
+    } catch (error) {
+      throw new Error('Error registering user');
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = new User({
-      email,
-      password: hashedPassword,
-      name,
-      image,
-      googleId, // if there is googleID
-    });
-
-    const savedUser = await newUser.save();
-
-    return { user: savedUser };
-  } catch (error) {
-    throw new Error('Error registering user');
-  }
-};
+  };
 
 
 export const loginUserService = async (email: string, password: string) => {

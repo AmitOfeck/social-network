@@ -4,24 +4,13 @@ import { registerUserService, loginUserService } from '../services/userServices'
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { email, password, name, image, googleId } = req.body;
+    const { email, password, name } = req.body;
+    const imagePath = req.file ? req.file.path : null; 
 
-    const result = await registerUserService(email, password, name, image, googleId);
-
-    if (result.error) {
-      return res.status(400).json({ error: result.error });
-    }
-
-    res.status(201).json({
-      message: 'User registered successfully',
-      user: result.user,
-    });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(500).json({ error: error.message });
-    } else {
-      res.status(500).json({ error: 'Unknown error occurred' });
-    }
+    const result = await registerUserService(email, password, name, imagePath);
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'Error registering user' });
   }
 };
 

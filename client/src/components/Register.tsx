@@ -7,13 +7,19 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<File | null>(null); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const result = await registerUser(email, password, name, image);
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('name', name);
+      if (image) formData.append('image', image);
+
+      const result = await registerUser(formData);
     } catch (error) {
       console.error('Error during register:', error);
     }
@@ -22,11 +28,7 @@ const Register = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string); // Converting image to base64 or URL
-      };
-      reader.readAsDataURL(file);
+      setImage(file); 
     }
   };
 
