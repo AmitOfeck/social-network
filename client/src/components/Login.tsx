@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'; // הוספתי את GoogleOAuthProvider
 import '../css/Login.css';
 import { loginUser } from '../utils/LoginUtils';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +14,16 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await loginUser(email, password);
-      console.log('Login success:', result);
+      //console.log('Login success:', result);
       localStorage.setItem('accessToken', result.accessToken);
-      localStorage.setItem('refreshToken', result.refreshToken);
+      Cookies.set('refreshToken', result.refreshToken, {
+        secure: true, 
+        httpOnly: false, 
+        sameSite: 'strict', 
+        expires: 180 
+      });
+      const refreshToken = Cookies.get('refreshToken');
+      console.log(refreshToken); 
     } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
