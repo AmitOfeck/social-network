@@ -30,7 +30,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     
     if (req.file) {
       const destinationFolder = path.join(__dirname, '../uploads/postsPictures');
-      const fileName = `${authorId}-${new Date().toISOString()}-${req.file.originalname}`;
+      const fileName = `${newPost._id}-${req.file.originalname}`;
   
       try {
         photoUrl = saveFileToFolder(req.file.buffer, fileName, destinationFolder);
