@@ -27,6 +27,7 @@ const Login = () => {
     } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
+        alert(`Error: ${err.message}`);
       } else {
         setErrorMessage('An unknown error occurred');
       }
