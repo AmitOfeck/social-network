@@ -4,44 +4,48 @@ import { saveFileToFolder } from '../utils/saveFile';
 import path from 'path';
 
 /**
- * פונקציה שמבצעת יצירת פוסט
- * @param req - אובייקט בקשה
- * @param res - אובייקט תגובה
+ * @param req 
+ * @param res 
  */
 export const createPost = async (req: Request, res: Response): Promise<void> => {
     const { authorId, content } = req.body;
-  
+    
     const newPost = new Post({
       authorId,
       content,
       date: new Date(),
       likesCount: 0,
       commentCount: 0,
-      photoUrl: '', 
+      photoUrl: '',
     });
   
     try {
       await newPost.save();  
     } catch (error) {
-      res.status(500).json({ message: 'Error creating post', error });
-      return;
+      res.status(500).json({ message: 'Error creating post', error });  
+      return;  
     }
   
     let photoUrl = '';
+    
     if (req.file) {
+      const destinationFolder = path.join(__dirname, '../uploads/postsPictures');
+      const fileName = `${authorId}-${new Date().toISOString()}-${req.file.originalname}`;
+  
       try {
-        const destinationFolder = path.join(__dirname, '../uploads/postsPictures');
-        const fileName = `${newPost._id}-${req.file.originalname}`; 
-  
         photoUrl = saveFileToFolder(req.file.buffer, fileName, destinationFolder);
-  
-        newPost.photoUrl = photoUrl;
-        await newPost.save();  
+        newPost.photoUrl = photoUrl; 
       } catch (error) {
-        res.status(500).json({ message: 'Error saving photo', error });
-        return;
+        res.status(500).json({ message: 'Error saving photo', error });  
+        return;  
       }
     }
   
-    res.status(201).json({ message: 'Post created successfully', post: newPost });
+    try {
+      await newPost.save(); 
+      res.status(201).json({ message: 'Post created successfully', post: newPost });  
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating post', error });  
+    }
   };
+  
