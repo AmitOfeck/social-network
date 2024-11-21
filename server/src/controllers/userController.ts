@@ -32,6 +32,7 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(200).json({
       accessToken: result.accessToken,
       refreshToken: result.refreshToken,
+      userId : result.userId
     });
   } catch (error) {
     res.status(500).json({ error: 'Server error' });

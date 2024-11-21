@@ -16,6 +16,7 @@ const Login = () => {
       const result = await loginUser(email, password);
       //console.log('Login success:', result);
       localStorage.setItem('accessToken', result.accessToken);
+      localStorage.setItem('userId', result.userId);
       Cookies.set('refreshToken', result.refreshToken, {
         secure: true, 
         httpOnly: false, 
@@ -23,7 +24,6 @@ const Login = () => {
         expires: 180 
       });
       const refreshToken = Cookies.get('refreshToken');
-      console.log(refreshToken); 
     } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
