@@ -7,7 +7,7 @@ import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router();
 
-const uploadDir = path.join(__dirname, '../uploads');
+const uploadDir = path.join(__dirname, '../uploads/profilepictures');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
