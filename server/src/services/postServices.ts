@@ -48,4 +48,15 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
       res.status(500).json({ message: 'Error creating post', error });  
     }
   };
+
+
+  export const getAllPostsService = async () => {
+    try {
+      const posts = await Post.find().sort({ createdAt: -1 }); 
+      return posts;
+    } catch (error) {
+      throw new Error('Failed to fetch posts');
+    }
+  };
+  
   
