@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import '../css/CreatePost.css';
+import '../css/CreatePost.css';
 import { createPost } from '../utils/PostUtils'; 
 
 const CreatePost = () => {
@@ -50,28 +50,36 @@ const CreatePost = () => {
 
   return (
     <div className="create-post-container">
-      <h2>Create Post</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Content:
-          <textarea
-            className="input-field"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Photo:
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </label>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Creating Post...' : 'Create Post'}
-        </button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      {successMessage && <p className="success-message">{successMessage}</p>}
-    </div>
+    <h2>Create a New Post</h2>
+    <form onSubmit={handleSubmit} className="create-post-form">
+      <div className="input-group">
+        <label htmlFor="content">Content:</label>
+        <textarea
+          id="content"
+          className="input-field"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+          placeholder="Write your post content here..."
+        />
+      </div>
+      <div className="input-group">
+        <label htmlFor="photo">Add Photo:</label>
+        <input
+          id="photo"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="file-input"
+        />
+      </div>
+      <button type="submit" className="submit-button" disabled={loading}>
+        {loading ? 'Creating Post...' : 'Create Post'}
+      </button>
+    </form>
+    {errorMessage && <p className="error-message">{errorMessage}</p>}
+    {successMessage && <p className="success-message">{successMessage}</p>}
+  </div>
   );
 };
 
