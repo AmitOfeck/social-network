@@ -3,6 +3,7 @@ import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import CreatePost from './components/CreatePost';
+import Posts from './components/Posts';
 
 
 function App() {
@@ -10,8 +11,9 @@ function App() {
     <div className="App">
       <h1>Welcome to the App</h1>
       {/* <Register /> */}
-      {/* <Login /> */}
+       {/* <Login />  */}
       <CreatePost />
+      <Posts />
     </div>
   );
 }
