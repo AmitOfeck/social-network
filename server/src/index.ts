@@ -32,9 +32,7 @@ app.use(express.json());
 app.get('/images/:filename', (req, res) => {
   const { filename } = req.params;
   const suffix = filename.split('/').pop() 
-  const filePath = path.join(__dirname, 'uploads', 'postsPictures', suffix!);
-
-  console.log(`path: ${filePath}`)
+  const filePath = path.join(__dirname, 'uploads', suffix!);
 
   res.sendFile(filePath, (err) => {
     if (err) {

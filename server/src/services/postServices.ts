@@ -29,7 +29,7 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     let photoUrl = '';
     
     if (req.file) {
-      const destinationFolder = path.join(__dirname, '../uploads/postsPictures');
+      const destinationFolder = path.join(__dirname, '../uploads');
       const fileName = `${newPost._id}-${req.file.originalname}`;
   
       try {
