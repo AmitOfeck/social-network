@@ -3,6 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
+import commentRoutes from './routes/commentRoutes';
 import bodyParser from 'body-parser';
 import * as path from'path';
 
@@ -44,6 +45,7 @@ app.get('/images/:filename', (req, res) => {
 
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
+app.use('/comments', commentRoutes);
 
 
 app.get('/', (req: Request, res: Response) => {
