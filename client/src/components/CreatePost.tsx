@@ -50,36 +50,45 @@ const CreatePost = () => {
 
   return (
     <div className="create-post-container">
-    <h2>Create a New Post</h2>
-    <form onSubmit={handleSubmit} className="create-post-form">
-      <div className="input-group">
-        <label htmlFor="content">Content:</label>
-        <textarea
-          id="content"
-          className="input-field"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          required
-          placeholder="Write your post content here..."
+      <div className="header">
+        <img
+          src={`https://via.placeholder.com/50`} // תמונת כותב
+          alt="User Avatar"
+          className="avatar"
         />
+        <h2>Create a New Post</h2>
       </div>
-      <div className="input-group">
-        <label htmlFor="photo">Add Photo:</label>
-        <input
-          id="photo"
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="file-input"
-        />
-      </div>
-      <button type="submit" className="submit-button" disabled={loading}>
-        {loading ? 'Creating Post...' : 'Create Post'}
-      </button>
-    </form>
-    {errorMessage && <p className="error-message">{errorMessage}</p>}
-    {successMessage && <p className="success-message">{successMessage}</p>}
-  </div>
+      <form onSubmit={handleSubmit} className="create-post-form">
+        <div className="input-group">
+          <label htmlFor="content">What’s on your mind?</label>
+          <textarea
+            id="content"
+            className="input-field"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+            placeholder="Share your thoughts..."
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="photo" className="photo-label">
+            Add a Photo
+          </label>
+          <input
+            id="photo"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="file-input"
+          />
+        </div>
+        <button type="submit" className="submit-button" disabled={loading}>
+          {loading ? 'Creating Post...' : 'Create Post'}
+        </button>
+      </form>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {successMessage && <p className="success-message">{successMessage}</p>}
+    </div>
   );
 };
 
