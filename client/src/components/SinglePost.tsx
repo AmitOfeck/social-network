@@ -97,7 +97,9 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       </div>
       <br/>
       <Comments postId={post._id} />
-      <CreateComment postId={post._id}/>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>      
+          <CreateComment postId={post._id}/>
+      </div>
 
     </div>
   );

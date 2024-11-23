@@ -36,6 +36,7 @@ const CreateComment = ({ postId }: { postId: string }) => {
         placeholder="Write a comment..."
         rows={2} 
       />
+      <div style={{ display: 'flex', flexDirection: 'row' }}>     
       <button 
         className="submit-btn" 
         onClick={handleSubmit} 
@@ -43,6 +44,7 @@ const CreateComment = ({ postId }: { postId: string }) => {
       >
         {loading ? 'Posting...' : 'Post'} 
       </button>
+      </div>
     </div>
   );
 };
