@@ -9,17 +9,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     const fetchImage = async () => {
       if (photoUrl) {
         try {
-        //   const response = await fetch(`http://localhost:4000/get-photo/${photoUrl.replace('src/', '')}`);
-        //   if (!response.ok) {
-        //     throw new Error('Image not found');
-        //   }
-
-        //   const imageBlob = await response.blob();
-        //   const url = URL.createObjectURL(imageBlob);
-        //   setImageUrl('https://www.now14.co.il/wp-content/uploads/2024/03/MTA_202403070613429e970ace201c7feb2174d987d812e7fc-690x460-1.jpg')
           setImageUrl(`http://localhost:4000/images/${post.photoUrl?.split('/').pop()!}`)
-
-          //setImageUrl(url); 
         } catch (error) {
           console.error('Error fetching image:', error);
         }
