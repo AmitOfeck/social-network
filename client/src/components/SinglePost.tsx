@@ -10,6 +10,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
   const [imageUrl, setImageUrl] = useState<string | null>(null); 
   const photoUrl = post.photoUrl ? post.photoUrl : "";
   const [user, setUser] = useState<{ name: string; image: string } | null>(null);
+  const [liked, setLiked] = useState(false); 
 
 
   useEffect(() => {
@@ -38,6 +39,10 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
 
     getUserInfo();
   }, [post.authorId]);
+
+  const toggleLike = () => {
+    setLiked(!liked); 
+  };
 
   const formatDate = (date: string) => {
     const postDate = new Date(date);
@@ -85,7 +90,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       )}
       <div className="footer">
         <div className="actions">
-          <span>Like ({post.likesCount})</span>
+          <span onClick={toggleLike}  style={{ color: liked ? 'red' : '#007bff', cursor: 'pointer' }}>Like ({post.likesCount})</span>
           <span>Comment ({post.commentCount})</span>
         </div>
       </div>
