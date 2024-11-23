@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import '../css/CreatePost.css';
 import { createPost } from '../utils/PostUtils'; 
+import { fetchUser } from '../utils/fetchUser';
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
@@ -8,8 +9,24 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [user, setUser] = useState<{ name: string; image: string } | null>(null); 
+
 
   const authorId = localStorage.getItem('userId'); 
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      if (authorId) {
+        try {
+          const userInfo = await fetchUser(authorId); 
+          setUser(userInfo);
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        }
+      }
+    };
+    getUserInfo();
+  }, [authorId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +69,7 @@ const CreatePost = () => {
     <div className="create-post-container">
       <div className="header">
         <img
-          src={`https://via.placeholder.com/50`} // תמונת כותב
+          src={user?.image ? `http://localhost:4000/images/${user.image.split('/').pop()!}` : `https://via.placeholder.com/50`}
           alt="User Avatar"
           className="avatar"
         />

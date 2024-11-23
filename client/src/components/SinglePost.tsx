@@ -7,11 +7,10 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     
   const [imageUrl, setImageUrl] = useState<string | null>(null); 
   const photoUrl = post.photoUrl ? post.photoUrl : "";
-  const [user, setUser] = useState<{ name: string; image: string } | null>(null); // סטייט למידע על המשתמש
+  const [user, setUser] = useState<{ name: string; image: string } | null>(null);
 
 
   useEffect(() => {
-    //console.log(post)
     const fetchImage = async () => {
       if (photoUrl) {
         try {
