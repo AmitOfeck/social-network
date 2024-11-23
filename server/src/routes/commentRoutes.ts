@@ -1,9 +1,11 @@
 import express from 'express';
 import { createComment } from '../controllers/commentController';
+import verifyToken from '../utils/verifyToken'; 
+
 
 const router = express.Router();
 
-router.post('/:postId', (req, res) => {
+router.post('/:postId', verifyToken , (req, res) => {
     const { postId } = req.params;
     const { content, authorId } = req.body;
   
