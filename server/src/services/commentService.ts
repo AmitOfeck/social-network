@@ -28,7 +28,7 @@ export const createCommentService = async (postId: string, content: string, auth
 
 
 export const getCommentsByPostIdService = (postId: string): Promise<any[]> => {
-    return Comment.find({ postId })
+    return Comment.find({ postId }).sort({ createdAt: -1 })
       .then((comments) => {
         return comments;
       })
