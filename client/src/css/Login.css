@@ -1,11 +1,9 @@
-/* Reset some default browser styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* כללי */
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #969abc, #a5a5f7);
@@ -16,7 +14,6 @@
     padding: 20px;
   }
   
-  /* קונטיינר של ה-login */
   .login-container {
     width: 100%;
     max-width: 500px;
@@ -28,7 +25,6 @@
     position: relative;
   }
   
-  /* כותרת */
   h2 {
     font-size: 28px;
     margin-bottom: 20px;
@@ -36,13 +32,11 @@
     color: #333;
   }
   
-  /* טופס */
   .login-form {
     display: flex;
     flex-direction: column;
   }
   
-  /* לייבל של שדה */
   label {
     font-size: 14px;
     font-weight: 500;
@@ -52,7 +46,6 @@
     font-weight: bold;
   }
   
-  /* שדות קלט */
   .input-field {
     width: 100%;
     padding: 12px 16px;
@@ -65,20 +58,17 @@
     transition: all 0.3s ease-in-out;
   }
   
-  /* שינוי צבע בעת focus */
   .input-field:focus {
     border-color: #4c75f6;
     outline: none;
     background-color: #fff;
   }
   
-  /* שינוי צבע בעת hover */
   .input-field:hover {
     border-color: #a0b2ff;
     background-color: #f1f6ff;
   }
   
-  /* כפתור התחברות */
   .login-button {
     width: 100%;
     padding: 12px;
@@ -102,12 +92,10 @@
     transform: translateY(0);
   }
   
-  /* כפתור של Google */
   .google-login-container {
     margin-top: 30px;
   }
   
-  /* כפתור Google */
   .google-login-button {
     width: 100%;
     padding: 12px;
@@ -123,13 +111,11 @@
     background-color: #357ae8;
   }
   
-  /* עיצוב לסמל של Google */
   .google-login-button img {
     width: 20px;
     margin-right: 10px;
   }
   
-  /* טקסט "או" בין כפתור גוגל לכפתור התחברות */
   .or-text {
     margin-top: 20px;
     font-size: 16px;

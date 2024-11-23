@@ -29,7 +29,7 @@
   }
   
   .register-container button {
-    background-color: #4c75f6; /* צבע סגול עדין */
+    background-color: #4c75f6; 
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -41,7 +41,7 @@
   }
   
   .register-container button:hover {
-    background-color: #5e4ae3; /* צבע כהה יותר */
+    background-color: #5e4ae3; 
   }
 
 
