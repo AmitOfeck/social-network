@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './SinglePost';
 import '../css/SinglePost.css' 
 import { fetchUser } from '../utils/fetchUser';
+import Comments from './Comments';
+
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
     
@@ -87,6 +89,9 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
           <span>Comment ({post.commentCount})</span>
         </div>
       </div>
+
+      <Comments postId={post._id} />
+
     </div>
   );
   
