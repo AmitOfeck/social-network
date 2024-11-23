@@ -1,7 +1,8 @@
 .create-comment {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    gap: 18px;
     width: 100%;
     margin-top: 10px;
     padding: 10px;
@@ -12,7 +13,7 @@
   
   .comment-textarea {
     width: 100%;
-    max-width: 500px;
+    max-width: 480px;
     padding: 12px;
     font-size: 14px;
     border: 1px solid #ccc;
