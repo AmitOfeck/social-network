@@ -14,7 +14,7 @@ router.post('/register', upload.single('image'), async (req, res) => {
   try {
 
     if (req.file) {
-      const destinationFolder = path.join(__dirname, '../uploads/profilePictures');
+      const destinationFolder = path.join(__dirname, '../uploads');
       const sanitizedEmail = req.body.email.replace(/[^a-zA-Z0-9]/g, '_');
       const fileName = `${sanitizedEmail}-${req.file.originalname}`;
 
