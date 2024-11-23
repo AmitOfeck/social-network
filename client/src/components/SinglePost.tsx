@@ -89,7 +89,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
           <span>Comment ({post.commentCount})</span>
         </div>
       </div>
-
+      <br/>
       <Comments postId={post._id} />
 
     </div>
