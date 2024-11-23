@@ -59,9 +59,9 @@ export const loginUserService = async (email: string, password: string) => {
 
 
 export const getUserByIdService = (userId: string): Promise<any> => {
-  return User.findById(userId)  // שליפת המשתמש מה-DB על פי ה-id
+  return User.findById(userId)  
     .then((user) => {
-      return user;  // מחזירים את המשתמש אם נמצא
+      return user;  
     })
     .catch((error) => {
       throw new Error('Error fetching user');

@@ -40,11 +40,9 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 export const getUser = (userId: string): Promise<any> => {
-  console.log("controller")
-  console.log(userId)
   return getUserByIdService(userId)
     .then((user) => {
-      return user;  // מחזירים את המשתמש אם נמצא, אחרת מחזירים null
+      return user; 
     })
     .catch((error) => {
       throw new Error('Error fetching user');
