@@ -7,6 +7,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
   const photoUrl = post.photoUrl ? post.photoUrl : "";
 
   useEffect(() => {
+    console.log(post)
     const fetchImage = async () => {
       if (photoUrl) {
         try {

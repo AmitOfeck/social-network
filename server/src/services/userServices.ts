@@ -56,3 +56,14 @@ export const loginUserService = async (email: string, password: string) => {
     throw new Error('Server error');
   }
 };
+
+
+export const getUserByIdService = (userId: string): Promise<any> => {
+  return User.findById(userId)  // שליפת המשתמש מה-DB על פי ה-id
+    .then((user) => {
+      return user;  // מחזירים את המשתמש אם נמצא
+    })
+    .catch((error) => {
+      throw new Error('Error fetching user');
+    });
+};

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { registerUserService, loginUserService } from '../services/userServices';
+import { registerUserService, loginUserService , getUserByIdService } from '../services/userServices';
 
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -37,4 +37,16 @@ export const loginUser = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
+};
+
+export const getUser = (userId: string): Promise<any> => {
+  console.log("controller")
+  console.log(userId)
+  return getUserByIdService(userId)
+    .then((user) => {
+      return user;  // מחזירים את המשתמש אם נמצא, אחרת מחזירים null
+    })
+    .catch((error) => {
+      throw new Error('Error fetching user');
+    });
 };

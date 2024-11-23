@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerUser, loginUser } from '../controllers/userController';
+import { registerUser, loginUser , getUser } from '../controllers/userController';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
@@ -34,6 +34,21 @@ router.post('/login', async (req, res) => {
   } catch (error) {
       res.status(400).json({ error: 'Invalid credentials' });
   }
+});
+
+router.get('/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  getUser(userId)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      return res.status(200).json(user);
+    })
+    .catch(() => {
+      res.status(500).json({ error: 'Server error' });
+    });
 });
 
 
