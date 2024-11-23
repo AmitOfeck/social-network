@@ -31,7 +31,7 @@ const Comments = ({ postId }: { postId: string }) => {
 
   return (
     <div className="comments-section">
-      {comments.map((comment: any) => (
+      {comments.slice(0,2).map((comment: any) => (
         <SingleComment key={comment._id} comment={comment} /> 
       ))}
     </div>
