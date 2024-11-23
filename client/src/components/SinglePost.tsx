@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './SinglePost'; 
+import './SinglePost';
+import '../css/SinglePost.css' 
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null); 
@@ -26,29 +27,34 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
 
   return (
     <div key={post._id} className="post">
-    <div className="header">
-      <h2 className="title">{post.content}</h2>
-      <p className="date">{formatDate(post.date)}</p>
-    </div>
-    {imageUrl ? (
-      <img
-        src={imageUrl} 
-        alt={post.content}
-        className="image" 
-      />
-    ) : (
-      <p>Loading image...</p> 
-    )}
-    <div className="footer">
-      <p><strong>Author:</strong> {post.authorId}</p>
-      <div className="actions">
-        <span>Like ({post.likesCount})</span>
-        <span>Comment ({post.commentCount})</span>
+      <div className="header">
+        <img
+          src={`https://via.placeholder.com/50`}
+          alt="Author Avatar"
+          className="avatar"
+        />
+        <div className="author-info">
+          <span className="author-name">{post.authorId}</span>
+          <span className="date">{formatDate(post.date)}</span>
+        </div>
+      </div>
+      <div className="content">{post.content}</div>
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={post.content}
+          className="image"
+        />
+      )}
+      <div className="footer">
+        <div className="actions">
+          <span>Like ({post.likesCount})</span>
+          <span>Comment ({post.commentCount})</span>
+        </div>
       </div>
     </div>
-  </div>
-
   );
+  
 };
 
 export default SinglePost;
