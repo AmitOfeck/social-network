@@ -39,9 +39,27 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
   }, [post.authorId]);
 
   const formatDate = (date: string) => {
-    const d = new Date(date);
-    return `${d.toLocaleDateString()} at ${d.toLocaleTimeString()}`;
+    const postDate = new Date(date);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
+  
+    if (diffInSeconds < 60) {
+      return `Few seconds ago`;
+    } else if (diffInSeconds < 3600) {
+      const diffInMinutes = Math.floor(diffInSeconds / 60);
+      return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
+    } else if (diffInSeconds < 86400) { // 60 * 60 * 24
+      const diffInHours = Math.floor(diffInSeconds / 3600);
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    } else if (diffInSeconds < 2592000) { // 60 * 60 * 24 * 30
+      const diffInDays = Math.floor(diffInSeconds / 86400);
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+    } else {
+      const diffInMonths = Math.floor(diffInSeconds / 2592000);
+      return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''} ago`;
+    }
   };
+  
 
   return (
     <div key={post._id} className="post">
@@ -52,8 +70,8 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
           className="avatar"
         />
         <div className="author-info">
-          <span className="author-name">{post.authorId}</span>
-          <span className="date">{formatDate(post.date)}</span>
+            <span className="author-name">{user?.name || post.authorId}</span>
+            <span className="date">{formatDate(post.date)}</span>
         </div>
       </div>
       <div className="content">{post.content}</div>
