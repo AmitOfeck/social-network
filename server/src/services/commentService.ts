@@ -24,3 +24,15 @@ export const createCommentService = async (postId: string, content: string, auth
         throw new Error('Error creating comment and updating post');
     }
 };
+
+
+
+export const getCommentsByPostIdService = (postId: string): Promise<any[]> => {
+    return Comment.find({ postId })
+      .then((comments) => {
+        return comments;
+      })
+      .catch((error) => {
+        throw new Error('Error retrieving comments');
+      });
+  };
