@@ -3,6 +3,7 @@ import './SinglePost';
 import '../css/SinglePost.css' 
 import { fetchUser } from '../utils/fetchUser';
 import Comments from './Comments';
+import CreateComment from './CreateComment';
 
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
@@ -96,6 +97,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       </div>
       <br/>
       <Comments postId={post._id} />
+      <CreateComment postId={post._id}/>
 
     </div>
   );
