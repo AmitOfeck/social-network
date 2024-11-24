@@ -1,5 +1,5 @@
 import express from 'express';
-import { createLike , deleteLike } from '../controllers/likeController';
+import { createLike , deleteLike , isLike } from '../controllers/likeController';
 import verifyToken from '../utils/verifyToken'; 
 
 const router = express.Router();
@@ -29,6 +29,14 @@ router.delete('/:postId', verifyToken , (req, res) => {
       .catch((error) => {
         return res.status(400).json({ error: error.message });
       });
+  });
+
+
+  router.get('/:postId',  verifyToken , (req, res) => {
+    const { postId } = req.params;  
+    const { authorId } = req.body;  
+  
+    isLike(postId, authorId, res); 
   });
   
 export default router;

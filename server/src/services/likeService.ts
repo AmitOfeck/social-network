@@ -42,5 +42,11 @@ export const addLike = async (postId: string, authorId: string) => {
   
     return;
   };
+
+
+  export const checkLikeStatus = async (postId: string, authorId: string) => {
+    const existingLike = await Like.findOne({ postId, authorId });  
+    return existingLike !== null;  
+  };
   
   
