@@ -4,6 +4,8 @@ import '../css/SinglePost.css'
 import { fetchUser } from '../utils/fetchUser';
 import Comments from './Comments';
 import CreateComment from './CreateComment';
+import { formatDate } from '../utils/dateUtils';
+
 
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
@@ -45,28 +47,6 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     setLiked(!liked); 
   };
 
-  const formatDate = (date: string) => {
-    const postDate = new Date(date);
-    const now = new Date();
-    const diffInSeconds = Math.floor((now.getTime() - postDate.getTime()) / 1000);
-  
-    if (diffInSeconds < 60) {
-      return `Few seconds ago`;
-    } else if (diffInSeconds < 3600) {
-      const diffInMinutes = Math.floor(diffInSeconds / 60);
-      return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
-    } else if (diffInSeconds < 86400) { // 60 * 60 * 24
-      const diffInHours = Math.floor(diffInSeconds / 3600);
-      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
-    } else if (diffInSeconds < 2592000) { // 60 * 60 * 24 * 30
-      const diffInDays = Math.floor(diffInSeconds / 86400);
-      return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
-    } else {
-      const diffInMonths = Math.floor(diffInSeconds / 2592000);
-      return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''} ago`;
-    }
-  };
-  
 
   return (
     <div key={post._id} className="post">
