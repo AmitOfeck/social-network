@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
+import likeRoutes from './routes/likeRoutes';
 import bodyParser from 'body-parser';
 import * as path from'path';
 
@@ -46,6 +47,7 @@ app.get('/images/:filename', (req, res) => {
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/comments', commentRoutes);
+app.use('/likes', likeRoutes);
 
 
 app.get('/', (req: Request, res: Response) => {
