@@ -32,8 +32,8 @@ router.delete('/:postId', verifyToken , (req, res) => {
   });
 
 
-  router.get('/:postId',  verifyToken , (req, res) => {
-    const { postId } = req.params;  
+  router.post('/:postId/isLike', verifyToken, (req, res) => {
+    const { postId } = req.params; 
     const { authorId } = req.body;  
   
     isLike(postId, authorId, res); 

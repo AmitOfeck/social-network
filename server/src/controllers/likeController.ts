@@ -26,6 +26,7 @@ export const createLike = async (postId: string, authorId: string): Promise<any>
   export const isLike = async (postId: string, authorId: string, res: Response) => {
     try {
       const isLiked = await checkLikeStatus(postId, authorId);  
+      
       return res.status(200).json({ isLiked });  
     } catch (error: unknown) { 
       if (error instanceof Error) {

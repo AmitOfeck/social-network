@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './SinglePost';
-import '../css/SinglePost.css' 
+import '../css/SinglePost.css'; 
 import { fetchUser } from '../utils/fetchUser';
 import Comments from './Comments';
 import CreateComment from './CreateComment';
 import { formatDate } from '../utils/dateUtils';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
-
-
-
+import { sendLikeRequest, checkLikeStatus, removeLike } from '../utils/likeUtils';
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
     
   const [user, setUser] = useState<{ name: string; image: string } | null>(null);
   const [liked, setLiked] = useState(false); 
-
+  const [likesCount, setLikesCount] = useState(post.likesCount); // כדי לעדכן את מספר הלייקים
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -26,12 +24,22 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       }
     };
 
-    getUserInfo();
-  }, [post.authorId]);
+    const checkLike = async () => {
+      try {
+        const authorId = localStorage.getItem('userId'); 
+        if (authorId) {
+          const likeStatus = await checkLikeStatus(post._id, authorId); 
+          setLiked(likeStatus.isLiked); 
+        }
+      } catch (error) {
+        console.error('Error checking like status:', error);
+      }
+    };
 
-  const toggleLike = () => {
-    setLiked(!liked); 
-  };
+    getUserInfo();
+    checkLike();
+  }, [post.authorId, post._id]); 
+
 
 
   return (
@@ -57,7 +65,13 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       )}
       <div className="footer">
         <div className="actions">
-          <span onClick={toggleLike}  style={{ color: liked ? 'red' : '#007bff', cursor: 'pointer' }}>Like ({post.likesCount})</span>
+          {/* כפתור לייק */}
+          <span
+            //onClick={liked ? handleRemoveLike : handleLike}  // אם הלייק קיים, נסיר אותו, אחרת נוסיף לייק
+            style={{ color: liked ? 'red' : '#007bff', cursor: 'pointer' }}
+          >
+            Like ({likesCount})
+          </span>
           <span>Comment ({post.commentCount})</span>
         </div>
       </div>
@@ -66,10 +80,8 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       <div style={{ display: 'flex', flexDirection: 'row' }}>      
           <CreateComment postId={post._id}/>
       </div>
-
     </div>
   );
-  
 };
 
 export default SinglePost;
