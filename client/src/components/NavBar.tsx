@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchUser } from '../utils/fetchUser';
 import '../css/NavBar.css';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
+import { Link } from 'react-router-dom'; 
 
 const NavBar = () => {
   const [user, setUser] = useState<{ name: string; image: string } | null>(null);
@@ -9,7 +10,7 @@ const NavBar = () => {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const userId = localStorage.getItem('userId'); // נניח שה- userId שמור ב- localStorage
+        const userId = localStorage.getItem('userId'); 
         if (userId) {
           const fetchedUser = await fetchUser(userId);
           setUser(fetchedUser);
@@ -25,12 +26,12 @@ const NavBar = () => {
   return (
     <nav className="nav-bar">
       <div className="nav-logo">
-        <a href="/feed">MySocial</a>
+         <Link to="/feed">MySocial</Link>
       </div>
       <div className="nav-links">
-        <a href="/feed" className="nav-link">
+        <Link to="/feed" className="nav-link">
           Home
-        </a>
+        </Link>
         <a href="/profile" className="nav-link">
           {user?.image ? (
             <img
@@ -43,7 +44,9 @@ const NavBar = () => {
           )}
          {/* {user?.name && <span className="user-name">{user.name}</span>} */}
         </a>
+        {/* <Link to="/login" className="nav-link"> */}
         <button className="logout-button">Logout</button>
+        {/* </Link> */}
       </div>
     </nav>
   );
