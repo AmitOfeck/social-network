@@ -5,30 +5,16 @@ import { fetchUser } from '../utils/fetchUser';
 import Comments from './Comments';
 import CreateComment from './CreateComment';
 import { formatDate } from '../utils/dateUtils';
+import { fetchImageUrl } from '../utils/fetchImageUrl';
+
 
 
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
     
-  const [imageUrl, setImageUrl] = useState<string | null>(null); 
-  const photoUrl = post.photoUrl ? post.photoUrl : "";
   const [user, setUser] = useState<{ name: string; image: string } | null>(null);
   const [liked, setLiked] = useState(false); 
 
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      if (photoUrl) {
-        try {
-          setImageUrl(`http://localhost:4000/images/${post.photoUrl?.split('/').pop()!}`)
-        } catch (error) {
-          console.error('Error fetching image:', error);
-        }
-      }
-    };
-
-    fetchImage();
-  }, [photoUrl]); 
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -52,7 +38,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     <div key={post._id} className="post">
       <div className="header">
         <img
-          src={user?.image ? `http://localhost:4000/images/${user.image?.split('/').pop()!}` : `https://via.placeholder.com/50`}
+          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
           alt="Author Avatar"
           className="avatar"
         />
@@ -62,9 +48,9 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
         </div>
       </div>
       <div className="content">{post.content}</div>
-      {imageUrl && (
+      {post.photoUrl && (
         <img
-          src={imageUrl}
+          src={post.photoUrl ? `${fetchImageUrl(post.photoUrl)}` : `https://via.placeholder.com/50`}
           alt={post.content}
           className="image"
         />

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../css/SingleComment.css';
 import { fetchUser } from '../utils/fetchUser';
 import { formatDate } from '../utils/dateUtils';
+import { fetchImageUrl } from '../utils/fetchImageUrl';
+
 
 
 const SingleComment = ({ comment }: { comment: { _id: string; authorId: string; content: string; date: string; authorImage?: string } }) => {
@@ -25,7 +27,7 @@ const SingleComment = ({ comment }: { comment: { _id: string; authorId: string; 
     <div key={comment._id} className="single-comment">
       <div className="comment-left">
         <img
-          src={user?.image ? `http://localhost:4000/images/${user.image?.split('/').pop()!}` : `https://via.placeholder.com/50`}
+           src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
           alt="Author Avatar"
           className="avatar"
         />
