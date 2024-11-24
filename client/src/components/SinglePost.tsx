@@ -76,7 +76,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
 
   return (
     <div key={post._id} className="post">
-      <div className="header">
+      <div id="header">
         <img
           src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
           alt="Author Avatar"

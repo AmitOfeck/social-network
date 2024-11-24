@@ -90,10 +90,10 @@
   color: #0056b3;
 }
 
-.header {
+#header {
   display: flex;
-  align-items: center; 
-  gap: 10px; 
+  align-items: flex-start !important;; 
+  gap: 2px; 
 }
 
 .avatar {
@@ -103,9 +103,10 @@
 }
 
 .author-info {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
+  display: flex !important;
+  flex-direction: column !important; 
+  align-items: flex-start !important; 
+  gap: 4px !important; 
 }
 
 .author-name {
