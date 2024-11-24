@@ -12,7 +12,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     
   const [user, setUser] = useState<{ name: string; image: string } | null>(null);
   const [liked, setLiked] = useState(false); 
-  const [likesCount, setLikesCount] = useState(post.likesCount); // כדי לעדכן את מספר הלייקים
+  const [likesCount, setLikesCount] = useState(post.likesCount); 
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -40,6 +40,38 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     checkLike();
   }, [post.authorId, post._id]); 
 
+  const handleLike = async () => {
+    try {
+      const authorId = localStorage.getItem('userId') || ''; 
+      if (!authorId) {
+        console.error('User ID not found in localStorage');
+        return;
+      }
+      await sendLikeRequest(post._id , authorId); 
+      setLikesCount((prev) => prev + 1); 
+      setLiked(true); 
+    } catch (error) {
+      console.error('Error sending like request:', error);
+    }
+  };
+
+
+
+  const handleRemoveLike = async () => {
+    try {
+      const authorId = localStorage.getItem('userId') || ''; 
+      if (!authorId) {
+        console.error('User ID not found in localStorage');
+        return;
+      }
+      await removeLike(post._id, authorId); 
+      setLikesCount((prev) => Math.max(prev - 1, 0)); 
+      setLiked(false); 
+    } catch (error) {
+      console.error('Error removing like:', error);
+    }
+  };
+
 
 
   return (
@@ -65,9 +97,8 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       )}
       <div className="footer">
         <div className="actions">
-          {/* כפתור לייק */}
           <span
-            //onClick={liked ? handleRemoveLike : handleLike}  // אם הלייק קיים, נסיר אותו, אחרת נוסיף לייק
+            onClick={liked ? handleRemoveLike : handleLike} 
             style={{ color: liked ? 'red' : '#007bff', cursor: 'pointer' }}
           >
             Like ({likesCount})
