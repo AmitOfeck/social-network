@@ -22,5 +22,25 @@ export const addLike = async (postId: string, authorId: string) => {
   
     return newLike;
   };
+
+
+  export const removeLike = async (postId: string, authorId: string) => {
+    const existingLike = await Like.findOneAndDelete({ postId, authorId });
+    if (!existingLike) {
+      throw new Error('Like not found for this user and post.');
+    }
+  
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { $inc: { likesCount: -1 } },
+      { new: true }
+    );
+  
+    if (!updatedPost) {
+      throw new Error('Post not found.');
+    }
+  
+    return;
+  };
   
   

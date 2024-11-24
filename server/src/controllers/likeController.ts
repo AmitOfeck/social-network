@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { addLike } from '../services/likeService';
+import { addLike , removeLike } from '../services/likeService';
 
 export const createLike = async (postId: string, authorId: string): Promise<any> => {
     return await addLike(postId, authorId)
@@ -8,5 +8,16 @@ export const createLike = async (postId: string, authorId: string): Promise<any>
       })
       .catch((error) => {
         throw new Error(error.message || 'Error creating like');
+      });
+  };
+
+
+  export const deleteLike = async (postId: string, authorId: string): Promise<any> => {
+    return await removeLike(postId, authorId)
+      .then(() => {
+        return { message: 'Like removed successfully' };
+      })
+      .catch((error) => {
+        throw new Error(error.message || 'Error removing like');
       });
   };
