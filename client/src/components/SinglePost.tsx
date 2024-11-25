@@ -108,7 +108,9 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
           >
             Like ({likesCount})
           </span>
-          <span>Comment ({post.commentCount})</span>
+          <Link to={`/comments/${post._id}`} style={{ textDecoration: 'none' }}>
+            <span>Comment ({post.commentCount})</span>
+          </Link>
         </div>
       </div>
       <br/>
