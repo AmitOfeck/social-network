@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { createPost } from '../services/postServices';
 import hasAllFields from '../utils/hasAllFields'; 
-import { getAllPostsService } from '../services/postServices'; 
+import { getAllPostsService , getPostByIdService } from '../services/postServices'; 
 
 export const createPostController = async (req: Request, res: Response): Promise<void> => {
     const requiredFields = ['authorId', 'content'];
@@ -27,4 +27,20 @@ export const createPostController = async (req: Request, res: Response): Promise
       res.status(500).json({ message: 'Failed to fetch posts' });
     }
   };
+
+
+  export const getPostByIdController = (req: Request, res: Response): void => {
+    const { id } = req.params; 
+    getPostByIdService(id)  
+        .then((post) => {
+            if (!post) {
+                return res.status(404).json({ message: 'Post not found' });
+            }
+            return res.status(200).json(post);  
+        })
+        .catch(() => {
+            return res.status(500).json({ message: 'Failed to fetch post' });
+        });
+};
+
   
