@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // הוספת useParams
-import { getPostById } from '../utils/PostUtils';  // היבוא של הפונקציה החדשה
-import { fetchComments } from '../utils/fetchComments';  // פונקציה לשליפת תגובות לפוסט
-import SinglePost from './SinglePost';  // היבוא של הקומפוננטה SinglePost
+import { useParams } from 'react-router-dom'; 
+import { getPostById } from '../utils/PostUtils';  
+import { fetchComments } from '../utils/fetchComments';  
+import SinglePost from './SinglePost';  
 import { CommentsProvider } from './contexts/CommentProvider';
 
 
 const AllComments = () => {
-  const { postId } = useParams();  // שליפת ה-ID של הפוסט מה-URL
+  const { postId } = useParams();  
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   
   useEffect(() => {
-    // שליפת הפוסט והתגובות לפי ה-ID
     const getPostAndComments = async () => {
       try {
         const postData = postId ? await getPostById(postId) : null;
@@ -25,7 +24,7 @@ const AllComments = () => {
     };
 
     getPostAndComments();
-  }, [postId]);  // Dependency array כולל את postId, אז כאשר ה-ID משתנה, הפונקציה תרוץ שוב
+  }, [postId]);  
 
   if (!post) {
     return <div>Loading...</div>;
@@ -33,9 +32,8 @@ const AllComments = () => {
 
   return (
     <div className="all-comments">
-      {/* הצגת הקומפוננטה SinglePost */}
       <CommentsProvider>
-         <SinglePost post={post} />  {/* העברת הפוסט כ-prop לקומפוננטה SinglePost */}
+         <SinglePost post={post} />  
       </CommentsProvider>
     </div>
   );
