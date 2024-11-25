@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchUser } from '../utils/fetchUser';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
+import { getPostsByAuthorId } from '../utils/postsUtils'; 
+import SinglePost from './SinglePost';
+import { CommentsProvider } from './contexts/CommentProvider';
 import '../css/PersonalPortal.css';
+import Posts from './Posts'
 
 const PersonalPortal = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,6 +17,8 @@ const PersonalPortal = () => {
     image: string;
     createdAt: string;
   } | null>(null);
+  const [posts, setPosts] = useState<any[]>([]); 
+  const [loadingPosts, setLoadingPosts] = useState<boolean>(true); 
 
   useEffect(() => {
     const loadUser = async () => {
@@ -28,6 +34,25 @@ const PersonalPortal = () => {
 
     loadUser();
   }, [id]);
+
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        if (id) {
+          const fetchedPosts = await getPostsByAuthorId(id);
+          setPosts(fetchedPosts);
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoadingPosts(false);
+      }
+    };
+
+    loadPosts();
+  }, [id]);
+
 
   if (!user) {
     return <p>Loading...</p>;
@@ -58,6 +83,18 @@ const PersonalPortal = () => {
             <h2>About {user?.name}</h2>
             <p>This is where you can discover more about the world of {user?.name}!</p>
         </div>
+        <h2>{user?.name} posts</h2>
+      <div>
+        {posts.length === 0 ? (
+          <p>No posts yet.</p>
+        ) : (
+          posts.map((post) => (
+          <CommentsProvider key={post._id}>
+            <SinglePost key={post._id} post={post} /> 
+          </CommentsProvider>
+          ))
+        )}
+      </div>
     </div>
   );
 };
