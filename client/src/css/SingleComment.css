@@ -47,4 +47,13 @@
     font-size: 0.9em;
     color: #777; 
   }
+
+  .author-name-link {
+    text-decoration: none;
+    color: inherit; 
+  }
+  
+  .author-name-link:hover {
+    opacity: 0.8; 
+  }
   

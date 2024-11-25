@@ -3,11 +3,11 @@ import '../css/SingleComment.css';
 import { fetchUser } from '../utils/fetchUser';
 import { formatDate } from '../utils/dateUtils';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
-
+import { Link } from 'react-router-dom'; 
 
 
 const SingleComment = ({ comment }: { comment: { _id: string; authorId: string; content: string; date: string; authorImage?: string } }) => {
-  const [user, setUser] = useState<{ name: string; image: string } | null>(null);
+  const [user, setUser] = useState<{ _id: string , name: string; image: string } | null>(null);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -26,14 +26,18 @@ const SingleComment = ({ comment }: { comment: { _id: string; authorId: string; 
   return (
     <div key={comment._id} className="single-comment">
       <div className="comment-left">
+      <Link to={`/profile/${user? user._id : ""}`} className="avatar-link">
         <img
            src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
           alt="Author Avatar"
           className="avatar"
         />
+      </Link>
       </div>
       <div className="comment-right">
+      <Link to={`/profile/${user?._id}`} className="author-name-link">
         <div className="comment-author">{user?.name || comment.authorId}</div>
+      </Link>
         <div className="comment-content">{comment.content}</div>
         <div className="comment-date">{formatDate(comment.date)}</div>
       </div>
