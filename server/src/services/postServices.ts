@@ -68,5 +68,15 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
         throw new Error('Failed to fetch post');  
     }
 };
+
+
+export const getPostsByAuthorIdService = async (authorId: string): Promise<any[]> => {
+  try {
+      const posts = await Post.find({ authorId }).sort({ date: -1 });  
+      return posts;  
+  } catch (error) {
+      throw new Error('Failed to fetch posts');
+  }
+};
   
   
