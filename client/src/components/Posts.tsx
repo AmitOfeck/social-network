@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { fetchPosts } from '../utils/postsUtils'; 
 import SinglePost from './SinglePost';
 import { CommentsProvider } from './contexts/CommentProvider';
+import { usePosts } from './contexts/PostContext';
 
 const Posts = () => {
-  const [posts, setPosts] = useState<any[]>([]); 
+  const { posts, setPosts } = usePosts(); 
   const [error, setError] = useState<string>(''); 
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Posts = () => {
     };
 
     getPosts();
-  }, []); 
+  }, [setPosts]); 
 
   if (error) {
     return <div>{error}</div>; 

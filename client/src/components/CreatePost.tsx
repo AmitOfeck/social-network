@@ -2,6 +2,7 @@ import React, { useState , useEffect} from 'react';
 import '../css/CreatePost.css';
 import { createPost } from '../utils/PostUtils'; 
 import { fetchUser } from '../utils/fetchUser';
+import { usePosts } from './contexts/PostContext';
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
@@ -11,7 +12,7 @@ const CreatePost = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [user, setUser] = useState<{ name: string; image: string } | null>(null); 
 
-
+  const { addPost } = usePosts();
   const authorId = localStorage.getItem('userId'); 
 
   useEffect(() => {
@@ -49,6 +50,8 @@ const CreatePost = () => {
 
 
       const response = await createPost(formData);
+      const newPost = response.post;
+      addPost(newPost);
       setSuccessMessage('Post created successfully!');
       setContent('');
       setPhoto(null);

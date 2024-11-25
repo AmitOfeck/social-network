@@ -1,14 +1,16 @@
-// src/components/Feed.js
 import React from 'react';
 import CreatePost from './CreatePost';
 import Posts from './Posts';
+import { PostProvider } from './contexts/PostContext';
 
 const Feed = () => {
   return (
-    <div className="feed">
-      <CreatePost />
-      <Posts />
-    </div>
+    <PostProvider>
+       <div className="feed">
+          <CreatePost />
+          <Posts />
+       </div>
+    </PostProvider>
   );
 };
 
