@@ -7,10 +7,11 @@ import CreateComment from './CreateComment';
 import { formatDate } from '../utils/dateUtils';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
 import { sendLikeRequest, checkLikeStatus, removeLike } from '../utils/likeUtils';
+import { Link } from 'react-router-dom'; 
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
     
-  const [user, setUser] = useState<{ name: string; image: string } | null>(null);
+  const [user, setUser] = useState<{ _id: string , name: string; image: string } | null>(null);
   const [liked, setLiked] = useState(false); 
   const [likesCount, setLikesCount] = useState(post.likesCount); 
 
@@ -77,13 +78,17 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
   return (
     <div key={post._id} className="post">
       <div id="header">
+      <Link to={`/profile/${user? user._id : ""}`} className="avatar-link">
         <img
           src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
           alt="Author Avatar"
           className="avatar"
         />
+       </Link> 
         <div className="author-info">
+        <Link to={`/profile/${user?._id}`} className="author-name-link">
             <span className="author-name">{user?.name || post.authorId}</span>
+        </Link>
             <span className="date">{formatDate(post.date)}</span>
         </div>
       </div>
