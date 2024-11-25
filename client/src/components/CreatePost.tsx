@@ -3,6 +3,7 @@ import '../css/CreatePost.css';
 import { createPost } from '../utils/PostUtils'; 
 import { fetchUser } from '../utils/fetchUser';
 import { usePosts } from './contexts/PostContext';
+import { Link } from 'react-router-dom'; 
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
@@ -10,7 +11,7 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [user, setUser] = useState<{ name: string; image: string } | null>(null); 
+  const [user, setUser] = useState<{ _id: string , name: string; image: string } | null>(null); 
 
   const { addPost } = usePosts();
   const authorId = localStorage.getItem('userId'); 
@@ -71,11 +72,13 @@ const CreatePost = () => {
   return (
     <div className="create-post-container">
       <div className="header">
+      <Link to={`/profile/${user? user._id : ""}`} className="avatar-link">
         <img
           src={user?.image ? `http://localhost:4000/images/${user.image.split('/').pop()!}` : `https://via.placeholder.com/50`}
           alt="User Avatar"
           className="avatar"
         />
+      </Link>
         <h2>Create a New Post</h2>
       </div>
       <form onSubmit={handleSubmit} className="create-post-form">
