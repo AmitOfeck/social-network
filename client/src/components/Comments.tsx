@@ -8,6 +8,8 @@ const Comments = ({ postId }: { postId: string }) => {
   const { comments, setComments } = useComments();
   const [loading, setLoading] = useState<boolean>(true);
 
+  const isCommentsPage = window.location.pathname.includes('/comments');
+
   useEffect(() => {
     const getComments = async () => {
       try {
@@ -33,9 +35,14 @@ const Comments = ({ postId }: { postId: string }) => {
 
   return (
     <div className="comments-section">
-      {comments.slice(0,2).map((comment: any) => (
-        <SingleComment key={comment._id} comment={comment} /> 
-      ))}
+      {isCommentsPage
+        ? comments.map((comment: any) => (
+            <SingleComment key={comment._id} comment={comment} />
+          ))
+        : comments.slice(0, 2).map((comment: any) => (
+            <SingleComment key={comment._id} comment={comment} />
+          ))
+      }
     </div>
   );
 };
