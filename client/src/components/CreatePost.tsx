@@ -105,8 +105,8 @@ const CreatePost = () => {
             className="file-input"
           />
         </div>
-        <button type="submit" className="submit-button" disabled={loading}>
-          {loading ? 'Creating Post...' : 'Create Post'}
+        <button type="submit" className="submit-button" disabled={loading || content.trim() === ''}>
+            {loading ? 'Creating Post...' : 'Create Post'}
         </button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
