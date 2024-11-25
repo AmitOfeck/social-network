@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { fetchComments } from '../utils/fetchComments';
 import SingleComment from './SingleComment'; 
+import { useComments } from './contexts/CommentProvider';
+
 
 const Comments = ({ postId }: { postId: string }) => {
-  const [comments, setComments] = useState<any[]>([]); 
+  const { comments, setComments } = useComments();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

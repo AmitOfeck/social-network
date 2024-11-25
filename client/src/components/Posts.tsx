@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPosts } from '../utils/postsUtils'; 
 import SinglePost from './SinglePost';
+import { CommentsProvider } from './contexts/CommentProvider';
 
 const Posts = () => {
   const [posts, setPosts] = useState<any[]>([]); 
@@ -31,7 +32,9 @@ const Posts = () => {
           <p>No posts available</p>
         ) : (
           posts.map((post) => (
+          <CommentsProvider key={post._id}>
             <SinglePost key={post._id} post={post} /> 
+          </CommentsProvider>
           ))
         )}
       </div>
