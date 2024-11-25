@@ -51,7 +51,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   resize: vertical;
-  min-height: 150px;
+  min-height: 100px;
   outline: none;
   transition: border 0.3s ease-in-out;
 }
