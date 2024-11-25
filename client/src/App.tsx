@@ -7,6 +7,7 @@ import CreatePost from './components/CreatePost';
 import Posts from './components/Posts';
 import NavBar from './components/NavBar';
 import Feed from './components/Feed';
+import PersonalPortal from './components/PersonalPortal';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/feed" element={<Feed />} /> 
+        <Route path="/profile/:id" element={<PersonalPortal />} />
         {/* <Route path="/login" element={<Login />} />  */}
       </Routes>
     </div>

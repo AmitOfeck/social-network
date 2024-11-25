@@ -29,24 +29,22 @@ const NavBar = () => {
          <Link to="/feed">MySocial</Link>
       </div>
       <div className="nav-links">
-        <Link to="/feed" className="nav-link">
-          Home
-        </Link>
-        <a href="/profile" className="nav-link">
+         <Link to="/feed" className="nav-link">
+              Home
+         </Link>
+        <Link to={`/profile/${localStorage.getItem('userId')}`} className="nav-profile">
           {user?.image ? (
-            <img
-              src={user.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
-              alt={user.name}
-              className="user-avatar"
+             <img
+                src={user.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
+                alt={user.name}
+                className="user-avatar"
             />
-          ) : (
-            <div className="user-avatar-placeholder"></div>
+             ) : (
+             <div className="user-avatar-placeholder"></div>
           )}
-         {/* {user?.name && <span className="user-name">{user.name}</span>} */}
-        </a>
-        {/* <Link to="/login" className="nav-link"> */}
-        <button className="logout-button">Logout</button>
-        {/* </Link> */}
+             {user?.name && <span className="user-name">{user.name}</span>}
+         </Link>
+         <button className="logout-button">Logout</button>
       </div>
     </nav>
   );
