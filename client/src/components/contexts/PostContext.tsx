@@ -14,6 +14,7 @@ interface PostContextProps {
   posts: Post[];
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
   addPost: (post: Post) => void;
+  deletePostFromContext: (postId: string) => void;
 }
 
 const PostContext = createContext<PostContextProps | undefined>(undefined);
@@ -25,8 +26,12 @@ export const PostProvider = ({ children }: { children: ReactNode }) => {
     setPosts((prevPosts) => [newPost, ...prevPosts]); 
   };
 
+  const deletePostFromContext = (postId: string) => {
+    setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
+  };
+
   return (
-    <PostContext.Provider value={{ posts, setPosts, addPost }}>
+    <PostContext.Provider value={{ posts, setPosts, addPost , deletePostFromContext }}>
       {children}
     </PostContext.Provider>
   );

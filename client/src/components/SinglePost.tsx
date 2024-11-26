@@ -10,6 +10,7 @@ import { deletePost } from '../utils/PostUtils'
 import { sendLikeRequest, checkLikeStatus, removeLike } from '../utils/likeUtils';
 import { Link } from 'react-router-dom'; 
 import { useComments } from './contexts/CommentProvider';
+import { usePosts } from './contexts/PostContext';
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
     
@@ -17,6 +18,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
   const [liked, setLiked] = useState(false); 
   const [likesCount, setLikesCount] = useState(post.likesCount); 
   const { comments, setComments } = useComments();
+  const { deletePostFromContext } = usePosts();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -78,8 +80,8 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
 
   const handleDeletePost = async () => {
     try {
-      const result = await deletePost(post._id);
-      console.log('Post deleted:', result);
+      await deletePost(post._id);
+      deletePostFromContext(post._id);
     } catch (error) {
       console.error('Error deleting post:', error);
     }
