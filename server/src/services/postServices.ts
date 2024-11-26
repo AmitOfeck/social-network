@@ -4,6 +4,9 @@ import Comment from '../models/commentModel';
 import Like from '../models/likeModel';
 import { saveFileToFolder } from '../utils/saveFile'; 
 import path from 'path';
+import fs from 'fs';
+import { deleteFileFromFolder } from '../utils/deleteFile';
+
 
 /**
  * @param req 
@@ -89,14 +92,25 @@ export const isPostAuthor = async (postId: string, userId: string): Promise<bool
   return post.authorId.toString() === userId;
 };
 
+
 export const deletePostService = async (postId: string): Promise<void> => {
-  
+  const post = await Post.findById(postId);
+  if (!post) {
+    throw new Error('Post not found');
+  }
+
   await Comment.deleteMany({ postId });
   await Like.deleteMany({ postId });
+
+  if (post.photoUrl) {
+    const destinationFolder = path.join(__dirname, '../uploads');
+    deleteFileFromFolder(post.photoUrl, destinationFolder);
+  }
+
   const result = await Post.findByIdAndDelete(postId);
 
   if (!result) {
-      throw new Error('Failed to delete post or post not found');
+    throw new Error('Failed to delete post');
   }
 };
   

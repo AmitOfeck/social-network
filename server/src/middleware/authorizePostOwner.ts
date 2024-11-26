@@ -23,6 +23,7 @@ const authorizePostOwner = async (req: Request, res: Response, next: NextFunctio
         const { id: postId } = req.params; 
 
         const isAuthor = await isPostAuthor(postId, userId);
+        console.log(isAuthor)
 
         if (!isAuthor) {
             res.status(403).json({ error: 'You are not authorized to delete this post' });
