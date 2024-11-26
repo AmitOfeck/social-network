@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import Feed from './components/Feed';
 import PersonalPortal from './components/PersonalPortal';
 import AllComments from './components/AllComments';
+import { PostProvider } from './components/contexts/PostContext';
 
 
 function App() {
@@ -25,8 +26,8 @@ function Main() {
       {location.pathname !== '/login' && location.pathname !== '/register' && <NavBar />}
       <Routes>
         <Route path="/feed" element={<Feed />} /> 
-        <Route path="/profile/:id" element={<PersonalPortal />} />
-        <Route path="/comments/:postId" element={<AllComments />} />
+        <Route path="/profile/:id" element={<PostProvider><PersonalPortal /></PostProvider>} />
+        <Route path="/comments/:postId" element={<PostProvider><AllComments /></PostProvider>} />
         {/* <Route path="/login" element={<Login />} /> 
         <Route path="/register" element={<Register />} /> */}
       </Routes>

@@ -6,7 +6,8 @@ import { getPostsByAuthorId } from '../utils/postsUtils';
 import SinglePost from './SinglePost';
 import { CommentsProvider } from './contexts/CommentProvider';
 import '../css/PersonalPortal.css';
-import Posts from './Posts'
+import Posts from './Posts';
+import { usePosts } from './contexts/PostContext';
 
 const PersonalPortal = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,8 +18,10 @@ const PersonalPortal = () => {
     image: string;
     createdAt: string;
   } | null>(null);
-  const [posts, setPosts] = useState<any[]>([]); 
-  const [loadingPosts, setLoadingPosts] = useState<boolean>(true); 
+  // const [posts, setPosts] = useState<any[]>([]); 
+  const [loadingPosts, setLoadingPosts] = useState<boolean>(true);
+  const { posts, setPosts } = usePosts(); 
+  const { deletePostFromContext } = usePosts(); 
 
   useEffect(() => {
     const loadUser = async () => {
