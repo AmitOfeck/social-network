@@ -127,12 +127,21 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
           </Link>
         </div>
         {localStorage.getItem('userId') === post.authorId && (
-          <button
-            className="delete-btn"
-            onClick={handleDeletePost}
-          >
-            🗑️
-          </button>
+               <div className="post-actions">
+               <button
+                 className="edit-btn"
+                 onClick={() => console.log('Redirect to edit page')}
+               >
+                 ✏️
+               </button>
+       
+               <button
+                 className="delete-btn"
+                 onClick={handleDeletePost}
+               >
+                 🗑️
+               </button>
+             </div>
         )}
       </div>
       <br/>
