@@ -1,5 +1,7 @@
 import { Request , Response } from 'express';
 import Post from '../models/postModel';
+import Comment from '../models/commentModel';
+import Like from '../models/likeModel';
 import { saveFileToFolder } from '../utils/saveFile'; 
 import path from 'path';
 
@@ -78,5 +80,27 @@ export const getPostsByAuthorIdService = async (authorId: string): Promise<any[]
       throw new Error('Failed to fetch posts');
   }
 };
+
+export const isPostAuthor = async (postId: string, userId: string): Promise<boolean> => {
+  const post = await Post.findById(postId);
+  if (!post) {
+      throw new Error('Post not found');
+  }
+  return post.authorId.toString() === userId;
+};
+
+export const deletePostService = async (postId: string): Promise<void> => {
   
+  await Comment.deleteMany({ postId });
+  await Like.deleteMany({ postId });
+  const result = await Post.findByIdAndDelete(postId);
+
+  if (!result) {
+      throw new Error('Failed to delete post or post not found');
+  }
+};
+  
+
+
+
   
