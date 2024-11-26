@@ -51,5 +51,31 @@ export const createPost = async (formData: FormData) => {
       throw error; 
     }
   };
+
+  export const deletePost = async (postId: string) => {
+    try {
+      const token = localStorage.getItem('accessToken'); 
+      if (!token) {
+        throw new Error('No access token found');
+      }
+  
+      const response = await fetch(`http://localhost:4000/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Post deletion failed');
+      }
+  
+      const result = await response.json(); 
+      return result; 
+    } catch (error) {
+      console.error('Error during post deletion:', error); 
+      throw error; 
+    }
+  };
   
   

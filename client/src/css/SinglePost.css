@@ -137,5 +137,23 @@
   opacity: 0.8; 
 }
 
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #ff4d4d;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.delete-btn:hover {
+  color: #ff1a1a; 
+  transform: scale(1.3); 
+}
+
+.delete-btn:focus {
+  outline: none;
+}
+
 
 

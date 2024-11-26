@@ -6,6 +6,7 @@ import Comments from './Comments';
 import CreateComment from './CreateComment';
 import { formatDate } from '../utils/dateUtils';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
+import { deletePost } from '../utils/PostUtils'
 import { sendLikeRequest, checkLikeStatus, removeLike } from '../utils/likeUtils';
 import { Link } from 'react-router-dom'; 
 import { useComments } from './contexts/CommentProvider';
@@ -75,6 +76,15 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     }
   };
 
+  const handleDeletePost = async () => {
+    try {
+      const result = await deletePost(post._id);
+      console.log('Post deleted:', result);
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
+
 
 
   return (
@@ -114,6 +124,14 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
             <span>Comment ({comments.length})</span>
           </Link>
         </div>
+        {localStorage.getItem('userId') === post.authorId && (
+          <button
+            className="delete-btn"
+            onClick={handleDeletePost}
+          >
+            🗑️
+          </button>
+        )}
       </div>
       <br/>
       <Comments postId={post._id} />
