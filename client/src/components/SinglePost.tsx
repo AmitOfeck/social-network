@@ -8,12 +8,14 @@ import { formatDate } from '../utils/dateUtils';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
 import { sendLikeRequest, checkLikeStatus, removeLike } from '../utils/likeUtils';
 import { Link } from 'react-router-dom'; 
+import { useComments } from './contexts/CommentProvider';
 
 const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?: string; authorId: string; date: string; likesCount: number; commentCount: number } }) => {
     
   const [user, setUser] = useState<{ _id: string , name: string; image: string } | null>(null);
   const [liked, setLiked] = useState(false); 
   const [likesCount, setLikesCount] = useState(post.likesCount); 
+  const { comments, setComments } = useComments();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -109,7 +111,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
             Like ({likesCount})
           </span>
           <Link to={`/comments/${post._id}`} style={{ textDecoration: 'none' }}>
-            <span>Comment ({post.commentCount})</span>
+            <span>Comment ({comments.length})</span>
           </Link>
         </div>
       </div>
