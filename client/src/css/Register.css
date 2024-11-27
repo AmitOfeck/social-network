@@ -1,11 +1,23 @@
-.register-container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+
+   .register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    background-color: #cbcbdd;
+  }
+  
+  .register-container {
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px 35px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
   }
   
   .register-container h2 {
@@ -19,31 +31,53 @@
     font-weight: bold;
   }
   
-  .register-container input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 14px;
+  .register-container .input-field {
+    width: 90%;
+    padding: 6px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 18px;
+    background-color: #f8f9fd;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 28px;
+  }
+  
+  .register-container .input-field:focus {
+    border-color: #4c75f6;
+    outline: none;
+    background-color: #fff;
+  }
+  
+  .register-container .input-field:hover {
+    border-color: #a0b2ff;
+    background-color: #f1f6ff;
   }
   
   .register-container button {
-    background-color: #4c75f6; 
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
     width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #4c75f6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
     margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
   .register-container button:hover {
-    background-color: #5e4ae3; 
+    background-color: #3650d6;
+    transform: translateY(-2px);
   }
-
-
-
+  
+  .register-container button:active {
+    background-color: #2b3bba;
+    transform: translateY(0);
+  }
   

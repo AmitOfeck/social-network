@@ -1,84 +1,62 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #969abc, #a5a5f7);
+
+   .login-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    padding: 20px;
+    width: 100%;
+    padding: 0;
+    background-color: #cbcbdd;
   }
   
   .login-container {
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     background-color: #fff;
-    padding: 30px 40px;
+    padding: 25px 35px;
     border-radius: 15px;
     box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
     position: relative;
   }
   
-  h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .login-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #333;
-    text-align: left;
-    font-weight: bold;
-  }
-  
-  .input-field {
-    width: 100%;
-    padding: 12px 16px;
-    margin-bottom: 20px;
+  .login-container .input-field {
+    width: 90%;
+    padding: 5px 10px; 
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px; 
     background-color: #f8f9fd;
     color: #333;
     transition: all 0.3s ease-in-out;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 10px; 
   }
   
-  .input-field:focus {
+  .login-container .input-field:focus {
     border-color: #4c75f6;
     outline: none;
     background-color: #fff;
   }
   
-  .input-field:hover {
+  .login-container .input-field:hover {
     border-color: #a0b2ff;
     background-color: #f1f6ff;
   }
   
   .login-button {
     width: 100%;
-    padding: 12px;
-    font-size: 16px;
+    padding: 10px;
+    font-size: 14px;
     background-color: #4c75f6;
     color: #fff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 15px;
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
@@ -92,17 +70,24 @@
     transform: translateY(0);
   }
   
+  .or-text {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+  }
+  
   .google-login-container {
-    margin-top: 30px;
+    margin-top: 25px;
   }
   
   .google-login-button {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     background-color: #4285f4;
     color: white;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
@@ -112,16 +97,8 @@
   }
   
   .google-login-button img {
-    width: 20px;
-    margin-right: 10px;
+    width: 18px;
+    margin-right: 8px;
   }
   
-  .or-text {
-    margin-top: 20px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #555;
-  }
 
-  
-  

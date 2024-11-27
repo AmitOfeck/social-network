@@ -44,6 +44,7 @@ const Login = () => {
 
   return (
     <GoogleOAuthProvider clientId="הכנס-כאן-את-המפתח-שלך">     {/* need to generate my google keyyyyyyyyyyyy */}
+         <div className="login-wrapper">
       <div className="login-container">
         <div className="login-box">
           <h2>Login</h2>
@@ -77,6 +78,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </GoogleOAuthProvider>
   );
 };

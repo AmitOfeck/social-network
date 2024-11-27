@@ -28,8 +28,8 @@ function Main() {
         <Route path="/feed" element={<Feed />} /> 
         <Route path="/profile/:id" element={<PostProvider><PersonalPortal /></PostProvider>} />
         <Route path="/comments/:postId" element={<PostProvider><AllComments /></PostProvider>} />
-        {/* <Route path="/login" element={<Login />} /> 
-        <Route path="/register" element={<Register />} /> */}
+        <Route path="/login" element={<Login />} /> 
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   );
