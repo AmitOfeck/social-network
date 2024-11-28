@@ -3,11 +3,13 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'; // הו�
 import '../css/Login.css';
 import { loginUser } from '../utils/LoginUtils';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+   const navigate = useNavigate();
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,6 +26,7 @@ const Login = () => {
         expires: 180 
       });
       const refreshToken = Cookies.get('refreshToken');
+      navigate('/feed');
     } catch (err) {
       if (err instanceof Error) {
         setErrorMessage(err.message);
