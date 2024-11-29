@@ -54,6 +54,43 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     }
   };
 
+  export const updatePostService = async (postId: string, content: string, file?: Express.Multer.File): Promise<any> => {
+    const post = await Post.findById(postId);
+
+    if (!post) {
+        throw new Error('Post not found');
+    }
+
+    if (content) {
+        post.content = content;
+    }
+
+    if (file) {
+        const destinationFolder = path.join(__dirname, '../uploads');
+        const fileName = `${post._id}-${file.originalname}`;
+
+        if (post.photoUrl) {
+            deleteFileFromFolder(post.photoUrl, destinationFolder);
+        }
+
+        try {
+            const photoUrl = saveFileToFolder(file.buffer, fileName, destinationFolder);
+            post.photoUrl = photoUrl;
+        } catch (error) {
+            throw new Error('Failed to save photo');
+        }
+    }
+
+    try {
+        const updatedPost = await post.save();
+        return updatedPost;
+    } catch (error) {
+        throw new Error('Failed to update post');
+    }
+};
+
+
+
 
   export const getAllPostsService = async () => {
     try {

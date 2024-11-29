@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import { createPostController } from '../controllers/postController';
-import { getAllPosts , getPostByIdController , getPostsByAuthorIdController , deletePostController } from '../controllers/postController';
+import { getAllPosts , getPostByIdController , getPostsByAuthorIdController , deletePostController , updatePostController } from '../controllers/postController';
 import verifyToken from '../utils/verifyToken'; 
 import authorizePostOwner from '../middleware/authorizePostOwner';
 
@@ -16,6 +16,8 @@ router.get('/:id', verifyToken, getPostByIdController);
 router.get('/author/:authorId', verifyToken, getPostsByAuthorIdController);
 
 router.delete('/:id', verifyToken, authorizePostOwner, deletePostController);
+router.put('/:id', verifyToken, authorizePostOwner, upload.single('photo'), updatePostController);
+
 
 
 
