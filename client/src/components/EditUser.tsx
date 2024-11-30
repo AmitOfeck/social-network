@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchUserById, updateUserById } from '../utils/userUtils';
 import '../css/EditUser.css';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
-import { height } from '@mui/system';
+import { useUser } from './contexts/UserContext';
 
 const EditUser = () => {
   const [name, setName] = useState('');
@@ -12,23 +12,25 @@ const EditUser = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  
+
   const { userId } = useParams();
   const navigate = useNavigate();
+  const { user, setUser } = useUser(); 
 
   useEffect(() => {
     const fetchUser = async () => {
       if (userId) {
         try {
-          const user = await fetchUserById(userId);
-          setName(user.name);
-          setOriginalPhoto(user.image);
+          const fetchedUser = await fetchUserById(userId);
+          setName(fetchedUser.name);
+          setOriginalPhoto(fetchedUser.image);
         } catch (error) {
           setErrorMessage('Failed to fetch user data.');
           console.error('Error fetching user:', error);
         }
       }
     };
+
     fetchUser();
   }, [userId]);
 
@@ -43,19 +45,25 @@ const EditUser = () => {
       setErrorMessage('User ID is missing.');
       return;
     }
-
+  
     setLoading(true);
     setErrorMessage('');
     setSuccessMessage('');
-
+  
     try {
       const formData = new FormData();
       formData.append('name', name);
       if (photo) {
         formData.append('image', photo);
       }
-
-      await updateUserById(userId, formData);
+  
+      const updatedUser = await updateUserById(userId, formData);
+  
+      setUser({
+        name: updatedUser.user.name, 
+        image: updatedUser.user.image, 
+      });
+  
       setSuccessMessage('User updated successfully!');
       navigate(`/profile/${userId}`);
     } catch (error) {
@@ -95,7 +103,7 @@ const EditUser = () => {
           {originalPhoto && !photo && (
             <div className="existing-photo">
               <img
-                 src={originalPhoto ? `${fetchImageUrl(originalPhoto)}` : `https://via.placeholder.com/50`} 
+                src={originalPhoto ? `${fetchImageUrl(originalPhoto)}` : `https://via.placeholder.com/50`}
                 alt="Current User Photo"
                 className="existing-photo-img"
               />

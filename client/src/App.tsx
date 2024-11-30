@@ -10,6 +10,7 @@ import AllComments from './components/AllComments';
 import EditPost from './components/EditPost';
 import EditUser from './components/EditUser';
 import { PostProvider } from './components/contexts/PostContext';
+import { UserProvider } from './components/contexts/UserContext';
 
 
 function App() {
@@ -25,13 +26,13 @@ function Main() {
 
   return (
     <div className="App">
-      {location.pathname !== '/login' && location.pathname !== '/register' && <NavBar />}
+      {location.pathname !== '/login' && location.pathname !== '/register' && <UserProvider><NavBar /></UserProvider>}
       <Routes>
         <Route path="/feed" element={<Feed />} /> 
         <Route path="/profile/:id" element={<PostProvider><PersonalPortal /></PostProvider>} />
         <Route path="/comments/:postId" element={<PostProvider><AllComments /></PostProvider>} />
         <Route path="/editPost/:postId" element={<PostProvider> <EditPost /> </PostProvider>} /> 
-        <Route path="/editUser/:userId" element={<EditUser/>} />
+        <Route path="/editUser/:userId" element={<UserProvider><EditUser/></UserProvider>} />
         <Route path="/login" element={<Login />} /> 
         <Route path="/register" element={<Register />} />
       </Routes>
