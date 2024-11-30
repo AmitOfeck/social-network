@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation} from 'react-router-dom';
 import './SinglePost';
 import '../css/SinglePost.css'; 
 import { fetchUser } from '../utils/fetchUser';
@@ -84,6 +84,10 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
     try {
       await deletePost(post._id);
       deletePostFromContext(post._id);
+      const location = window.location.pathname;
+      if (location.includes('/comments')) {
+        navigate('/feed');
+      } 
     } catch (error) {
       console.error('Error deleting post:', error);
     }
