@@ -1,6 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import path from 'path';
 import User from '../models/userModel';
+import { saveFileToFolder } from '../utils/saveFile'; 
+import { deleteFileFromFolder } from '../utils/deleteFile';
 
 
 export const registerUserService = async (
@@ -66,4 +69,40 @@ export const getUserByIdService = (userId: string): Promise<any> => {
     .catch((error) => {
       throw new Error('Error fetching user');
     });
+};
+
+
+export const updateUserService = async (userId: string, name?: string, file?: Express.Multer.File): Promise<any> => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  if (name) {
+    user.name = name;
+  }
+
+  if (file) {
+    const destinationFolder = path.join(__dirname, '../uploads');
+    const fileName = `${user._id}-${file.originalname}`;
+
+    if (user.image) {
+      deleteFileFromFolder(user.image, destinationFolder);
+    }
+
+    try {
+      const imagePath = saveFileToFolder(file.buffer, fileName, destinationFolder);
+      user.image = imagePath;
+    } catch (error) {
+      throw new Error('Failed to save image');
+    }
+  }
+
+  try {
+    const updatedUser = await user.save();
+    return updatedUser;
+  } catch (error) {
+    throw new Error('Failed to update user');
+  }
 };

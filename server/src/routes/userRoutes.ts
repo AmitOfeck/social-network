@@ -1,5 +1,7 @@
 import express from 'express';
-import { registerUser, loginUser , getUser } from '../controllers/userController';
+import { registerUser, loginUser , getUser , updateUserController} from '../controllers/userController';
+import { authorizeUser } from '../middleware/authorizeUser';
+import verifyToken from '../utils/verifyToken'; 
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
@@ -50,6 +52,8 @@ router.get('/:userId', (req, res) => {
       res.status(500).json({ error: 'Server error' });
     });
 });
+
+router.put('/:id', verifyToken, authorizeUser, upload.single('image'), updateUserController);
 
 
 

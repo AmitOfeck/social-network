@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { registerUserService, loginUserService , getUserByIdService } from '../services/userServices';
+import { registerUserService, loginUserService , getUserByIdService , updateUserService } from '../services/userServices';
 
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -47,4 +47,25 @@ export const getUser = (userId: string): Promise<any> => {
     .catch((error) => {
       throw new Error('Error fetching user');
     });
+};
+
+
+export const updateUserController = async (req: Request, res: Response): Promise<void> => {
+  const { id: userId } = req.params;
+  const { name } = req.body;
+  const file = req.file;
+
+  try {
+    const updatedUser = await updateUserService(userId, name, file);
+
+    if (!updatedUser) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'User updated successfully', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ error: 'Failed to update user' });
+  }
 };
