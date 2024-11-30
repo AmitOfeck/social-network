@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { fetchUser } from '../utils/fetchUser';
 import '../css/NavBar.css';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 import { useUser } from './contexts/UserContext';
 
 const NavBar = () => {
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadUser = async () => {
@@ -33,6 +34,16 @@ const NavBar = () => {
          <Link to="/feed" className="nav-link">
               Home
          </Link>
+
+         {user && (
+          <button
+            className="edit-btn"
+            onClick={() => navigate(`/editUser/${localStorage.getItem('userId')}`)} 
+          >
+            ✏️
+          </button>
+        )}
+
         <Link to={`/profile/${localStorage.getItem('userId')}`} className="nav-profile">
           {user?.image ? (
              <img
