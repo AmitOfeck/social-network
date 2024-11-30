@@ -3,6 +3,7 @@ import { fetchUser } from '../utils/fetchUser';
 import '../css/NavBar.css';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
 import { Link , useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { useUser } from './contexts/UserContext';
 
 const NavBar = () => {
@@ -24,6 +25,16 @@ const NavBar = () => {
 
     loadUser();
   }, [user]);
+
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userId');
+    Cookies.remove('refreshToken');
+    setUser(null);
+    navigate('/login');
+  };
+
 
   return (
     <nav className="nav-bar">
@@ -56,7 +67,7 @@ const NavBar = () => {
           )}
              {user?.name && <span className="user-name">{user.name}</span>}
          </Link>
-         <button className="logout-button">Logout</button>
+         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
     </nav>
   );
