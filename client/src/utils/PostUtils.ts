@@ -77,5 +77,33 @@ export const createPost = async (formData: FormData) => {
       throw error; 
     }
   };
+
+  export const updatePost = async (postId: string, updatedPost: any) => {
+    try {
+      const token = localStorage.getItem('accessToken'); 
+      if (!token) {
+        throw new Error('No access token found');
+      }
+  
+      const response = await fetch(`http://localhost:4000/posts/${postId}`, {
+        method: 'PUT', 
+        headers: {
+          'Authorization': `${token}`
+        },
+        body: updatedPost, 
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update post');
+      }
+  
+      const result = await response.json(); 
+      return result; 
+    } catch (error) {
+      console.error('Error updating post:', error);
+      throw error; 
+    }
+  };
+  
   
   

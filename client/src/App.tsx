@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import Feed from './components/Feed';
 import PersonalPortal from './components/PersonalPortal';
 import AllComments from './components/AllComments';
+import EditPost from './components/EditPost';
 import { PostProvider } from './components/contexts/PostContext';
 
 
@@ -28,6 +29,7 @@ function Main() {
         <Route path="/feed" element={<Feed />} /> 
         <Route path="/profile/:id" element={<PostProvider><PersonalPortal /></PostProvider>} />
         <Route path="/comments/:postId" element={<PostProvider><AllComments /></PostProvider>} />
+        <Route path="/editPost/:postId" element={<PostProvider> <EditPost /> </PostProvider>} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/register" element={<Register />} />
       </Routes>
