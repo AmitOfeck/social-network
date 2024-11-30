@@ -111,3 +111,28 @@
   font-size: 14px;
   text-align: center;
 }
+
+
+.header2 {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  position: relative;
+}
+
+.avatar-link2 {
+  position: absolute;
+  left: 10px;
+}
+
+.avatar2 {
+  width: 50px; 
+  height: 50px;
+  border-radius: 50%; 
+}
+
+/* h2 {
+  margin-left: 70px;
+  text-align: center;
+} */
+

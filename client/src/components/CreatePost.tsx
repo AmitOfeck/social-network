@@ -71,12 +71,12 @@ const CreatePost = () => {
 
   return (
     <div className="create-post-container">
-      <div className="header">
-      <Link to={`/profile/${user? user._id : ""}`} className="avatar-link">
+      <div className="header2">
+      <Link to={`/profile/${user? user._id : ""}`} className="avatar-link2">
         <img
           src={user?.image ? `http://localhost:4000/images/${user.image.split('/').pop()!}` : `https://via.placeholder.com/50`}
           alt="User Avatar"
-          className="avatar"
+          className="avatar2"
         />
       </Link>
         <h2>Create a New Post</h2>
