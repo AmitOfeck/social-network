@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SinglePost';
 import '../css/SinglePost.css'; 
 import { fetchUser } from '../utils/fetchUser';
@@ -19,6 +20,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
   const [likesCount, setLikesCount] = useState(post.likesCount); 
   const { comments, setComments } = useComments();
   const { deletePostFromContext } = usePosts();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -130,7 +132,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
                <div className="post-actions">
                <button
                  className="edit-btn"
-                 onClick={() => console.log('Redirect to edit page')}
+                 onClick={() =>  navigate(`/editPost/${post._id}`)}
                >
                  ✏️
                </button>
