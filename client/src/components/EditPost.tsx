@@ -73,7 +73,7 @@ const EditPost = () => {
 
   return (
     <div className="edit-post-container">
-      <div className="header">
+      <div className="header" style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>Edit Post</h2>
       </div>
       <form onSubmit={handleSubmit} className="edit-post-form">
