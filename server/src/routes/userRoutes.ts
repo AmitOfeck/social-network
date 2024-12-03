@@ -1,11 +1,14 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { registerUser, loginUser , getUser , updateUserController} from '../controllers/userController';
 import { authorizeUser } from '../middleware/authorizeUser';
 import verifyToken from '../utils/verifyToken'; 
+import { verifyRefreshToken } from '../utils/verifyToken';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { saveFileToFolder } from '../utils/saveFile'; 
+import { generateNewAccessToken } from '../utils/generateNewAccessToken';
+
 
 const router = express.Router();
 
@@ -54,6 +57,24 @@ router.get('/:userId', (req, res) => {
 });
 
 router.put('/:id', verifyToken, authorizeUser, upload.single('image'), updateUserController);
+
+router.post('/refresh-token/:userId', verifyRefreshToken, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const token = req.header('Authorization');
+    if (!token) {
+       res.status(401).json({ error: 'No refresh token provided' });
+    }
+
+    const { userId } = req.params;
+    const newAccessToken = await generateNewAccessToken(userId);
+
+    res.status(200).json({ accessToken: newAccessToken });
+  } catch (error) {
+    next(error); 
+  }
+});
+
+
 
 
 
