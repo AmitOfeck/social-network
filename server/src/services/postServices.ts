@@ -92,14 +92,25 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
 
 
 
-  export const getAllPostsService = async () => {
-    try {
-      const posts = await Post.find().sort({ createdAt: -1 }); 
-      return posts;
-    } catch (error) {
+export const getAllPostsService = async (page: number, limit: number) => {
+  try {
+      const skip = (page - 1) * limit;
+      const posts = await Post.find()
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit);
+
+      const totalPosts = await Post.countDocuments();
+      return {
+          posts,
+          totalPosts,
+          totalPages: Math.ceil(totalPosts / limit),
+          currentPage: page,
+      };
+  } catch (error) {
       throw new Error('Failed to fetch posts');
-    }
-  };
+  }
+};
 
 
   export const getPostByIdService = async (id: string): Promise<any> => {
