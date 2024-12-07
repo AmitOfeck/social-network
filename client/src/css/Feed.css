@@ -1,0 +1,44 @@
+.load-more-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .load-more-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .load-more-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: scale(1.1);
+  }
+  
+  .load-more-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+  
+  .loading {
+    animation: bounce 1s infinite ease-in-out;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
