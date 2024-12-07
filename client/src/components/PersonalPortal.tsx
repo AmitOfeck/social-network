@@ -2,101 +2,99 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchUser } from '../utils/fetchUser';
 import { fetchImageUrl } from '../utils/fetchImageUrl';
-import { getPostsByAuthorId } from '../utils/postsUtils'; 
+import { getPostsByAuthorId } from '../utils/postsUtils';
 import SinglePost from './SinglePost';
 import { CommentsProvider } from './contexts/CommentProvider';
-import '../css/PersonalPortal.css';
-import Posts from './Posts';
 import { usePosts } from './contexts/PostContext';
+import '../css/PersonalPortal.css';
 
 const PersonalPortal = () => {
   const { id } = useParams<{ id: string }>();
-  const [user, setUser] = useState<{
-    _id: string;
-    name: string;
-    email: string;
-    image: string;
-    createdAt: string;
-  } | null>(null);
-  // const [posts, setPosts] = useState<any[]>([]); 
-  const [loadingPosts, setLoadingPosts] = useState<boolean>(true);
-  const { posts, setPosts } = usePosts(); 
-  const { deletePostFromContext } = usePosts(); 
+  const [user, setUser] = useState<null | any>(null);
+
+  const { posts, setPosts } = usePosts();
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(3);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadUser = async () => {
-      try {
-        if (id) {
+      if (id) {
+        try {
           const fetchedUser = await fetchUser(id);
           setUser(fetchedUser);
+        } catch (error) {
+          console.error('Error fetching user:', error);
         }
-      } catch (error) {
-        console.error('Error fetching user:', error);
       }
     };
-
+  
     loadUser();
-  }, [id]);
-
+  }, []); 
 
   useEffect(() => {
-    const loadPosts = async () => {
+    const getPosts = async () => {
+      setIsLoading(true);
       try {
         if (id) {
-          const fetchedPosts = await getPostsByAuthorId(id);
-          setPosts(fetchedPosts);
+          const postsData = await getPostsByAuthorId(id, page, limit);
+          setPosts((prevPosts) =>
+            page === 1
+              ? postsData.posts
+              : [...prevPosts, ...postsData.posts]
+          );
         }
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Failed to fetch posts');
+        setError('Failed to fetch posts');
       } finally {
-        setLoadingPosts(false);
+        setIsLoading(false);
       }
     };
 
-    loadPosts();
-  }, [id]);
+    getPosts();
+  }, [id, page, limit]);
 
+  const loadMorePosts = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   if (!user) {
-    return <p>Loading...</p>;
+    return <p>Loading user...</p>;
   }
-
-  const formatDate = (isoDate: string): string => {
-    const date = new Date(isoDate);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); 
-    const year = date.getFullYear();
-  
-    return `${day}/${month}/${year}`;
-  };
 
   return (
     <div className="personal-portal-container">
       <div className="profile-header">
         <img
-          src={user.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
-          alt={user.name}
+          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
+          alt={user?.name}
           className="profile-image"
         />
-        <h1>{user.name}</h1>
-        <p className="user-email">{user.email}</p>
-        <p className="user-joined-date">Joined: {formatDate(user.createdAt)}</p>
+        <h1>{user?.name}</h1>
+        <p className="user-email">{user?.email}</p>
       </div>
-         <div className="profile-content">
-            <h2>About {user?.name}</h2>
-            <p>This is where you can discover more about the world of {user?.name}!</p>
-        </div>
-        <h2>{user?.name} posts</h2>
+      <h2>Posts by {user?.name}</h2>
       <div>
-        {posts.length === 0 ? (
-          <p>No posts yet.</p>
+        {posts.length === 0 && !isLoading ? (
+          <p>No posts available</p>
         ) : (
           posts.map((post) => (
-          <CommentsProvider key={post._id}>
-            <SinglePost key={post._id} post={post} /> 
-          </CommentsProvider>
+            <CommentsProvider key={post._id}>
+              <SinglePost key={post._id} post={post} />
+            </CommentsProvider>
           ))
         )}
+      </div>
+      <div className="load-more-container">
+        <button
+          className={`load-more-btn ${isLoading ? 'loading' : ''}`}
+          onClick={loadMorePosts}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : 'Load More Posts'}
+        </button>
       </div>
     </div>
   );

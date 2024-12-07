@@ -24,7 +24,7 @@ const NavBar = () => {
     };
 
     loadUser();
-  }, [user]);
+  }, []);
 
 
   const handleLogout = () => {

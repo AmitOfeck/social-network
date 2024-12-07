@@ -74,17 +74,18 @@ export const getAllPosts = async (req: Request, res: Response) => {
 };
 
 
-export const getPostsByAuthorIdController = (req: Request, res: Response): void => {
-  const { authorId } = req.params;  
-
-  getPostsByAuthorIdService(authorId)  
-      .then((posts) => {
-          return res.status(200).json(posts);  
-      })
-      .catch(() => {
-          return res.status(500).json({ message: 'Failed to fetch posts' });
-      });
-};
+export const getPostsByAuthorIdController = async (req: Request, res: Response): Promise<void> => {
+    const { authorId } = req.params;
+    const page = parseInt(req.query.page as string) || 1; 
+    const limit = parseInt(req.query.limit as string) || 3; 
+  
+    try {
+      const result = await getPostsByAuthorIdService(authorId, page, limit);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch posts' });
+    }
+  };
 
 
 export const deletePostController = async (req: Request, res: Response): Promise<void> => {
