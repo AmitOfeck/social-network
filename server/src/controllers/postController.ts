@@ -46,17 +46,18 @@ export const createPostController = async (req: Request, res: Response): Promise
 
 
 export const getAllPosts = async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 1; 
+  const skip = parseInt(req.query.skip as string) || 0; 
   const limit = parseInt(req.query.limit as string) || 5; 
 
   try {
-      const result = await getAllPostsService(page, limit);
-      res.status(200).json(result);
+    const result = await getAllPostsService(skip, limit);
+    res.status(200).json(result);
   } catch (error) {
-      console.error('Error fetching posts:', error);
-      res.status(500).json({ message: 'Failed to fetch posts' });
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ message: 'Failed to fetch posts' });
   }
 };
+
 
 
   export const getPostByIdController = (req: Request, res: Response): void => {
