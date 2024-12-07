@@ -11,12 +11,11 @@ import '../css/PersonalPortal.css';
 const PersonalPortal = () => {
   const { id } = useParams<{ id: string }>();
   const [user, setUser] = useState<null | any>(null);
-
   const { posts, setPosts } = usePosts();
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(3);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [totalPosts, setTotalPosts] = useState<number>(0);
+  const [hasFetchedInitialPosts, setHasFetchedInitialPosts] = useState<boolean>(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -29,36 +28,49 @@ const PersonalPortal = () => {
         }
       }
     };
-  
+
     loadUser();
-  }, []); 
+  }, [id]);
+
 
   useEffect(() => {
-    const getPosts = async () => {
-      setIsLoading(true);
-      try {
-        if (id) {
-          const postsData = await getPostsByAuthorId(id, page, limit);
-          setPosts((prevPosts) =>
-            page === 1
-              ? postsData.posts
-              : [...prevPosts, ...postsData.posts]
-          );
+    const loadInitialPosts = async () => {
+      if (id) {
+        setIsLoading(true);
+        try {
+          const postsData = await getPostsByAuthorId(id, 0, 3);
+          setPosts(postsData.posts);
+          setTotalPosts(postsData.totalPosts)
+          setHasFetchedInitialPosts(true);
+        } catch (error) {
+          console.error('Failed to fetch posts');
+          setError('Failed to fetch posts');
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Failed to fetch posts');
-        setError('Failed to fetch posts');
-      } finally {
-        setIsLoading(false);
       }
     };
 
-    getPosts();
-  }, [id, page, limit]);
+    loadInitialPosts();
+  }, [id]);
 
-  const loadMorePosts = () => {
-    setPage((prevPage) => prevPage + 1);
+
+  const loadMorePosts = async () => {
+    setIsLoading(true);
+    try {
+      const newSkip = posts.length; 
+      if(id){
+        const postsData = await getPostsByAuthorId(id, newSkip, 3);
+        setPosts((prevPosts) => [...prevPosts, ...postsData.posts]);
+      }
+    } catch (error) {
+      console.error('Error loading more posts');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const isDisableButton = posts.length >= totalPosts; 
 
   if (!user) {
     return <p>Loading user...</p>;
@@ -82,7 +94,7 @@ const PersonalPortal = () => {
         ) : (
           posts.map((post) => (
             <CommentsProvider key={post._id}>
-              <SinglePost key={post._id} post={post} />
+              <SinglePost post={post} />
             </CommentsProvider>
           ))
         )}
@@ -91,7 +103,7 @@ const PersonalPortal = () => {
         <button
           className={`load-more-btn ${isLoading ? 'loading' : ''}`}
           onClick={loadMorePosts}
-          disabled={isLoading}
+          disabled={isLoading || isDisableButton} 
         >
           {isLoading ? 'Loading...' : 'Load More Posts'}
         </button>

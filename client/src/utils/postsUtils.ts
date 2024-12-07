@@ -25,33 +25,40 @@ export const fetchPosts = async (page = 1, limit = 5) => {
 };
 
 
-export const getPostsByAuthorId = async (authorId: string, page = 1, limit = 3) => {
+export const getPostsByAuthorId = async (authorId: string, skip = 0, limit = 3) => {
   try {
     const token = localStorage.getItem('accessToken');
+    
     if (!token) {
       throw new Error('No access token found');
     }
 
     const response = await fetch(
-      `http://localhost:4000/posts/author/${authorId}?page=${page}&limit=${limit}`,
+      `http://localhost:4000/posts/author/${authorId}?skip=${skip}&limit=${limit}`,
       {
         method: 'GET',
         headers: {
-          'Authorization': `${token}`,
+          'Authorization': token,
         },
       }
     );
 
     if (!response.ok) {
-      throw new Error('Failed to fetch posts by author');
+      const errorResponse = await response.json();
+      throw new Error(errorResponse?.message || 'Failed to fetch posts by author');
     }
 
     const result = await response.json();
-    return result;
+
+    return {
+      posts: result.posts || [],
+      totalPosts: result.totalPosts || 0,
+    };
   } catch (error) {
     console.error('Error fetching posts by author ID:', error);
     throw error;
   }
 };
+
 
   

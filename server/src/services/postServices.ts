@@ -123,21 +123,21 @@ export const getAllPostsService = async (page: number, limit: number) => {
 };
 
 
-export const getPostsByAuthorIdService = async (authorId: string, page: number, limit: number): Promise<any> => {
+export const getPostsByAuthorIdService = async (authorId: string, skip: number, limit: number): Promise<any> => {
   try {
-    const skip = (page - 1) * limit; 
     const posts = await Post.find({ authorId })
-      .sort({ date: -1 }) 
+      .sort({ date: -1 })
       .skip(skip)
       .limit(limit);
 
-    const totalPosts = await Post.countDocuments({ authorId }); 
+    const totalPosts = await Post.countDocuments({ authorId });
 
     return {
       posts,
       totalPosts,
-      totalPages: Math.ceil(totalPosts / limit),
-      currentPage: page,
+      totalPages: Math.ceil(totalPosts / limit), 
+      currentSkip: skip,
+      currentLimit: limit,
     };
   } catch (error) {
     throw new Error('Failed to fetch posts');
