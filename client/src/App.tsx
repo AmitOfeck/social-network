@@ -25,18 +25,20 @@ function Main() {
   const location = useLocation(); 
 
   return (
+    <UserProvider>
     <div className="App">
-      {location.pathname !== '/login' && location.pathname !== '/register' && <UserProvider><NavBar /></UserProvider>}
+      {location.pathname !== '/login' && location.pathname !== '/register' && <NavBar />}
       <Routes>
         <Route path="/feed" element={<Feed />} /> 
         <Route path="/profile/:id" element={<PostProvider><PersonalPortal /></PostProvider>} />
         <Route path="/comments/:postId" element={<PostProvider><AllComments /></PostProvider>} />
         <Route path="/editPost/:postId" element={<PostProvider> <EditPost /> </PostProvider>} /> 
-        <Route path="/editUser/:userId" element={<UserProvider><EditUser/></UserProvider>} />
+        <Route path="/editUser/:userId" element={<EditUser/>} />
         <Route path="/login" element={<Login />} /> 
         <Route path="/register" element={<Register />} />
       </Routes>
     </div>
+    </UserProvider>
   );
 }
 

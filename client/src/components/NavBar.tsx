@@ -16,14 +16,14 @@ const NavBar = () => {
         const userId = localStorage.getItem('userId'); 
         if (userId) {
           const fetchedUser = await fetchUser(userId);
-          setUser(fetchedUser);
+          setUser({name:fetchedUser.name, image:fetchedUser.image});
         }
       } catch (error) {
         console.error('Error fetching user:', error);
       }
     };
-
-    loadUser();
+    
+      loadUser();
   }, []);
 
 
