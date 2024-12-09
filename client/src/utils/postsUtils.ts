@@ -1,4 +1,6 @@
-export const fetchPosts = async (skip = 0, limit = 3) => {
+import { handle401AndRetry } from "./handle401Error";
+
+export const fetchPosts = async (skip = 0, limit = 3) : Promise<any> => {
   try {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -16,6 +18,12 @@ export const fetchPosts = async (skip = 0, limit = 3) => {
     );
 
     if (!response.ok) {
+      console.log(response.status)
+      if (response.status === 401) {
+        const data = await handle401AndRetry(fetchPosts, skip, limit);
+        console.log(data)
+        return await await handle401AndRetry(fetchPosts, skip, limit);;
+      }
       throw new Error('Failed to fetch posts');
     }
 
