@@ -41,7 +41,7 @@ export const verifyRefreshToken = (req: Request, res: Response, next: NextFuncti
   }
 
   try {
-    const decoded = jwt.verify(token, 'your-refresh-secret-key') as { _id: string };
+    const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET_KEY as string) as { _id: string };
 
     if (!decoded) {
       res.status(401).json({ error: 'Invalid token' });
