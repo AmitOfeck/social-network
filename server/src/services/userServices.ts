@@ -4,9 +4,7 @@ import path from 'path';
 import User from '../models/userModel';
 import { saveFileToFolder } from '../utils/saveFile'; 
 import { deleteFileFromFolder } from '../utils/deleteFile';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 
 export const registerUserService = async (

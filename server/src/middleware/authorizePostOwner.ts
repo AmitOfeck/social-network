@@ -2,9 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { isPostAuthor } from '../services/postServices';
 import { console } from 'inspector';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 /**
  * @param req 

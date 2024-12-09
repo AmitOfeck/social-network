@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
-dotenv.config();
 
 export const generateNewAccessToken = async (userId: string): Promise<string> => {
   try {
