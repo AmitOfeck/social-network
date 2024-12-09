@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { isPostAuthor } from '../services/postServices';
 import { console } from 'inspector';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * @param req 
@@ -18,7 +21,7 @@ const authorizePostOwner = async (req: Request, res: Response, next: NextFunctio
 
 
     try {
-        const decoded = jwt.verify(token, 'your-secret-key') as { userId: string };
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as { userId: string };
         const userId = decoded.userId; 
         const { id: postId } = req.params; 
 

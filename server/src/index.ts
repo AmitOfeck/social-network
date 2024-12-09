@@ -7,19 +7,21 @@ import commentRoutes from './routes/commentRoutes';
 import likeRoutes from './routes/likeRoutes';
 import bodyParser from 'body-parser';
 import * as path from'path';
+import dotenv from 'dotenv';
 
 
+dotenv.config();
 
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 
 mongoose
-  .connect('mongodb://localhost:27017/social-network') 
+  .connect(process.env.MONGODB_URI as string) 
   .then(() => {
     console.log('Connected to MongoDB');
   })

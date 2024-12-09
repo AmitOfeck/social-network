@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * @param req 
@@ -15,7 +18,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your-secret-key') as { _id: string };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as { _id: string };
 
     if (!decoded) {
       res.status(401).json({ error: 'Invalid token' });

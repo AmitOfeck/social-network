@@ -4,6 +4,9 @@ import path from 'path';
 import User from '../models/userModel';
 import { saveFileToFolder } from '../utils/saveFile'; 
 import { deleteFileFromFolder } from '../utils/deleteFile';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 export const registerUserService = async (
@@ -51,7 +54,7 @@ export const loginUserService = async (email: string, password: string) => {
     }
 
     const userId = user._id;
-    const accessToken = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '7h' });
+    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '7h' });
     const refreshToken = jwt.sign({ userId: user._id }, 'your-refresh-secret-key', { expiresIn: '180d' });
 
     return { accessToken, refreshToken , userId };
