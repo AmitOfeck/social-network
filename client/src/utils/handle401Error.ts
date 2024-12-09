@@ -5,7 +5,7 @@ type AsyncFunction<T> = (...args: any[]) => Promise<T>;
 export const handle401AndRetry = async <T>( originalFunction: AsyncFunction<T>, ...args: Parameters<AsyncFunction<T>> ): Promise<T> => {
   try {
     const refreshToken = Cookies.get('refreshToken'); 
-    const userId = localStorage.getItem('accessToken')
+    const userId = localStorage.getItem('userId')
     if (!refreshToken) {
       throw new Error('Refresh token is missing. Logging out...');
     }
