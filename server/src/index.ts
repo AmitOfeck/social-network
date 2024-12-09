@@ -10,11 +10,16 @@ import * as path from'path';
 import dotenv from 'dotenv';
 
 
-dotenv.config({ path: path.resolve(__dirname, '../config/.env') });
-
+const envPath = path.resolve(__dirname, `../config/.env.${process.env.NODE_ENV || 'local'}`);
+dotenv.config({ path: envPath });
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+
+console.log('Loaded environment:', process.env.NODE_ENV);
+console.log('PORT:', process.env.PORT);
+console.log('MONGODB_URI:', process.env.MONGODB_URI);
 
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
