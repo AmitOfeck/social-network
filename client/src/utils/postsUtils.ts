@@ -18,11 +18,8 @@ export const fetchPosts = async (skip = 0, limit = 3) : Promise<any> => {
     );
 
     if (!response.ok) {
-      console.log(response.status)
       if (response.status === 401) {
-        const data = await handle401AndRetry(fetchPosts, skip, limit);
-        console.log(data)
-        return await await handle401AndRetry(fetchPosts, skip, limit);;
+        return await handle401AndRetry(fetchPosts, skip, limit);;
       }
       throw new Error('Failed to fetch posts');
     }
