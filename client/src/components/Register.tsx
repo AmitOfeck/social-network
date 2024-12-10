@@ -20,6 +20,9 @@ const Register = () => {
       if (image) formData.append('image', image);
 
       const result = await registerUser(formData);
+      if(result.error){
+        alert(result.error)
+      }
     } catch (error) {
       console.error('Error during register:', error);
     }
