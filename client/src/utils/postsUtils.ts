@@ -34,7 +34,7 @@ export const fetchPosts = async (skip = 0, limit = 3) : Promise<any> => {
 
 
 
-export const getPostsByAuthorId = async (authorId: string, skip = 0, limit = 3) => {
+export const getPostsByAuthorId = async (authorId: string, skip = 0, limit = 3) : Promise<any> => {
   try {
     const token = localStorage.getItem('accessToken');
     
@@ -53,8 +53,10 @@ export const getPostsByAuthorId = async (authorId: string, skip = 0, limit = 3) 
     );
 
     if (!response.ok) {
-      const errorResponse = await response.json();
-      throw new Error(errorResponse?.message || 'Failed to fetch posts by author');
+      if (response.status === 401) {
+        return await handle401AndRetry(getPostsByAuthorId, authorId, skip, limit);
+      }
+      throw new Error('Failed to fetch posts');
     }
 
     const result = await response.json();
