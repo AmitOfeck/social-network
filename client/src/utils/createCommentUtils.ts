@@ -1,5 +1,6 @@
+import { handle401AndRetry } from "./handle401Error";
 
-export const createCommentUtils = async (postId: string, content: string) => {
+export const createCommentUtils = async (postId: string, content: string) : Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken');
       const authorId = localStorage.getItem('userId');
@@ -13,6 +14,9 @@ export const createCommentUtils = async (postId: string, content: string) => {
       });
   
       if (!response.ok) {
+        if (response.status === 401) {
+          return await handle401AndRetry(createCommentUtils, postId, content);
+        }
         throw new Error('Failed to create comment');
       }
   

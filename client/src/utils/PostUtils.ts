@@ -1,4 +1,6 @@
-export const createPost = async (formData: FormData) => {
+import { handle401AndRetry } from "./handle401Error";
+
+export const createPost = async (formData: FormData): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken'); 
       if (!token) {
@@ -14,7 +16,10 @@ export const createPost = async (formData: FormData) => {
       });
   
       if (!response.ok) {
-        throw new Error('Post creation failed');
+        if (response.status === 401) {
+          return await handle401AndRetry(createPost, formData);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json(); 
@@ -26,7 +31,7 @@ export const createPost = async (formData: FormData) => {
   };
 
 
-  export const getPostById = async (postId: string) => {
+  export const getPostById = async (postId: string): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken'); 
       if (!token) {
@@ -41,7 +46,10 @@ export const createPost = async (formData: FormData) => {
       });
   
       if (!response.ok) {
-        throw new Error('Failed to fetch post');
+        if (response.status === 401) {
+          return await handle401AndRetry(getPostById, postId);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json(); 
@@ -52,7 +60,7 @@ export const createPost = async (formData: FormData) => {
     }
   };
 
-  export const deletePost = async (postId: string) => {
+  export const deletePost = async (postId: string): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken'); 
       if (!token) {
@@ -67,7 +75,10 @@ export const createPost = async (formData: FormData) => {
       });
   
       if (!response.ok) {
-        throw new Error('Post deletion failed');
+        if (response.status === 401) {
+          return await handle401AndRetry(deletePost, postId);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json(); 
@@ -78,7 +89,7 @@ export const createPost = async (formData: FormData) => {
     }
   };
 
-  export const updatePost = async (postId: string, updatedPost: any) => {
+  export const updatePost = async (postId: string, updatedPost: any): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken'); 
       if (!token) {
@@ -94,7 +105,10 @@ export const createPost = async (formData: FormData) => {
       });
   
       if (!response.ok) {
-        throw new Error('Failed to update post');
+        if (response.status === 401) {
+          return await handle401AndRetry(updatePost, postId, updatedPost);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json(); 

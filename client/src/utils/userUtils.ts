@@ -1,3 +1,5 @@
+import { handle401AndRetry } from "./handle401Error";
+
 export const updateUserById = async (userId: string, formData: FormData): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken');
@@ -14,7 +16,10 @@ export const updateUserById = async (userId: string, formData: FormData): Promis
       });
   
       if (!response.ok) {
-        throw new Error('Failed to update user');
+        if (response.status === 401) {
+          return await handle401AndRetry(updateUserById, userId, formData);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json();
@@ -41,7 +46,10 @@ export const updateUserById = async (userId: string, formData: FormData): Promis
       });
   
       if (!response.ok) {
-        throw new Error('Failed to fetch user');
+        if (response.status === 401) {
+          return await handle401AndRetry(fetchUserById, userId);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json();

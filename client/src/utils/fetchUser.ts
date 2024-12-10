@@ -1,4 +1,6 @@
-export const fetchUser = async (userId: string) => {
+import { handle401AndRetry } from "./handle401Error";
+
+export const fetchUser = async (userId: string): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken');
       
@@ -13,7 +15,10 @@ export const fetchUser = async (userId: string) => {
       });
   
       if (!response.ok) {
-        throw new Error('User not found');
+        if (response.status === 401) {
+          return await handle401AndRetry(fetchUser, userId);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json();

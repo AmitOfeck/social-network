@@ -1,7 +1,8 @@
 
+import { handle401AndRetry } from "./handle401Error";
 const API_URL = 'http://localhost:4000/likes';
 
-export const sendLikeRequest = async (postId: string, authorId: string) => {
+export const sendLikeRequest = async (postId: string, authorId: string): Promise<any>  => {
   try {
     const token = localStorage.getItem('accessToken');
     
@@ -19,7 +20,10 @@ export const sendLikeRequest = async (postId: string, authorId: string) => {
     });
 
     if (!response.ok) {
-      throw new Error('Error adding like');
+      if (response.status === 401) {
+        return await handle401AndRetry(sendLikeRequest, postId, authorId);
+      }
+      throw new Error('Failed to fetch comments');
     }
 
     const result = await response.json();
@@ -31,7 +35,7 @@ export const sendLikeRequest = async (postId: string, authorId: string) => {
 };
 
 
-export const checkLikeStatus = async (postId: string, authorId: string) => {
+export const checkLikeStatus = async (postId: string, authorId: string): Promise<any>  => {
     try {
       const token = localStorage.getItem('accessToken');
       
@@ -49,7 +53,10 @@ export const checkLikeStatus = async (postId: string, authorId: string) => {
       });
   
       if (!response.ok) {
-        throw new Error('Error checking like status');
+        if (response.status === 401) {
+          return await handle401AndRetry(checkLikeStatus, postId, authorId);
+        }
+        throw new Error('Failed to fetch comments');
       }
   
       const result = await response.json();
@@ -62,7 +69,7 @@ export const checkLikeStatus = async (postId: string, authorId: string) => {
   };
 
 
-export const removeLike = async (postId: string, authorId: string) => {
+export const removeLike = async (postId: string, authorId: string): Promise<any>  => {
   try {
     const token = localStorage.getItem('accessToken');
     
@@ -80,7 +87,10 @@ export const removeLike = async (postId: string, authorId: string) => {
     });
 
     if (!response.ok) {
-      throw new Error('Error removing like');
+      if (response.status === 401) {
+        return await handle401AndRetry(removeLike, postId, authorId);
+      }
+      throw new Error('Failed to fetch comments');
     }
 
     const result = await response.json();
