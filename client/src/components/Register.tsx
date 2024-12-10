@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import '../css/Register.css';
 import '../css/Login.css';
 import { registerUser } from '../utils/RegisterUtils';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [image, setImage] = useState<File | null>(null); 
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,6 +25,9 @@ const Register = () => {
       const result = await registerUser(formData);
       if(result.error){
         alert(result.error)
+      }
+      if(result.user){
+        navigate('/login');
       }
     } catch (error) {
       console.error('Error during register:', error);
