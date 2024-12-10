@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../css/Register.css';
 import '../css/Login.css';
 import { registerUser } from '../utils/RegisterUtils';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -76,6 +77,11 @@ const Register = () => {
         </label>
         <button type="submit">Register</button>
       </form>
+      <div className="login-link">
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
     </div>
   </div>
   );
