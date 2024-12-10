@@ -3,7 +3,7 @@ import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'; // הו�
 import '../css/Login.css';
 import { loginUser } from '../utils/LoginUtils';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -79,6 +79,11 @@ const Login = () => {
               onError={handleGoogleLoginFailure}
             />
           </div>
+          <div className="register-link">
+              <p>
+                Don't have an account? <Link to="/register">Register</Link>
+              </p>
+            </div>
         </div>
       </div>
     </div>

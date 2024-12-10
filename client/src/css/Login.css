@@ -100,5 +100,25 @@
     width: 18px;
     margin-right: 8px;
   }
+
+  .register-link {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .register-link p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .register-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+  
   
 
