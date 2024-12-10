@@ -27,7 +27,10 @@ export const handle401AndRetry = async <T>( originalFunction: AsyncFunction<T>, 
     return originalFunction(...args);
   } catch (error) {
     console.error('Error refreshing token:', error);
-    // Handle logout or redirect to login page
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userId');
+    Cookies.remove('refreshToken');
+    window.location.href = '/login';
     throw error;
   }
 };
