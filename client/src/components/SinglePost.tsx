@@ -100,7 +100,7 @@ const SinglePost = ({ post }: { post: { _id: string; content: string; photoUrl?:
       <div id="header">
       <Link to={`/profile/${user? user._id : ""}`} className="avatar-link">
         <img
-          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
+          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
           alt="Author Avatar"
           className="avatar"
         />

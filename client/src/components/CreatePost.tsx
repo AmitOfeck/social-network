@@ -74,7 +74,7 @@ const CreatePost = () => {
       <div className="header2">
       <Link to={`/profile/${user? user._id : ""}`} className="avatar-link2">
         <img
-          src={user?.image ? `http://localhost:4000/images/${user.image.split('/').pop()!}` : `https://via.placeholder.com/50`}
+          src={user?.image ? `http://localhost:4000/images/${user.image.split('/').pop()!}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
           alt="User Avatar"
           className="avatar2"
         />

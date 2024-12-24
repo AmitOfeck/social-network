@@ -58,12 +58,15 @@ const NavBar = () => {
         <Link to={`/profile/${localStorage.getItem('userId')}`} className="nav-profile">
           {user?.image ? (
              <img
-                src={user.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
+                src={user.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
                 alt={user.name}
                 className="user-avatar"
             />
              ) : (
-             <div className="user-avatar-placeholder"></div>
+              <img
+              src={`https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
+              className="user-avatar"
+          />
           )}
              {user?.name && <span className="user-name">{user.name}</span>}
          </Link>

@@ -28,7 +28,7 @@ const SingleComment = ({ comment }: { comment: { _id: string; authorId: string; 
       <div className="comment-left">
       <Link to={`/profile/${user? user._id : ""}`} className="avatar-link">
         <img
-           src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
+           src={user?.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
           alt="Author Avatar"
           className="avatar"
         />

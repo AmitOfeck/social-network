@@ -80,7 +80,7 @@ const PersonalPortal = () => {
     <div className="personal-portal-container">
       <div className="profile-header">
         <img
-          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://via.placeholder.com/50`}
+          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
           alt={user?.name}
           className="profile-image"
         />
