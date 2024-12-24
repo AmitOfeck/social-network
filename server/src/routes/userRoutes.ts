@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import { saveFileToFolder } from '../utils/saveFile'; 
 import { generateNewAccessToken } from '../utils/generateNewAccessToken';
+import User from '../models/userModel';
 
 
 const router = express.Router();
@@ -18,7 +19,10 @@ const upload = multer({ storage });
 router.post('/register', upload.single('image'), async (req, res) => { 
   try {
 
-    if (req.file) {
+    const { email } = req.body;
+    const userExists = await User.findOne({ email });
+
+    if (req.file && !userExists) {
       const destinationFolder = path.join(__dirname, '../uploads');
       const sanitizedEmail = req.body.email.replace(/[^a-zA-Z0-9]/g, '_');
       const fileName = `${sanitizedEmail}-${req.file.originalname}`;
