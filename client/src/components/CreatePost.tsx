@@ -4,6 +4,7 @@ import { createPost } from '../utils/PostUtils';
 import { fetchUser } from '../utils/fetchUser';
 import { usePosts } from './contexts/PostContext';
 import { Link } from 'react-router-dom'; 
+import { fetchImageUrl } from '../utils/fetchImageUrl';
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
@@ -73,8 +74,8 @@ const CreatePost = () => {
     <div className="create-post-container">
       <div className="header2">
       <Link to={`/profile/${user? user._id : ""}`} className="avatar-link2">
-        <img
-          src={user?.image ? `http://localhost:4000/images/${user.image.split('/').pop()!}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
+      <img
+          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
           alt="User Avatar"
           className="avatar2"
         />

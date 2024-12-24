@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { registerUser, loginUser , getUser , updateUserController} from '../controllers/userController';
+import { registerUser, loginUser , getUser , updateUserController } from '../controllers/userController';
 import { authorizeUser } from '../middleware/authorizeUser';
 import verifyToken from '../utils/verifyToken'; 
 import { verifyRefreshToken } from '../utils/verifyToken';
@@ -9,6 +9,8 @@ import path from 'path';
 import { saveFileToFolder } from '../utils/saveFile'; 
 import { generateNewAccessToken } from '../utils/generateNewAccessToken';
 import User from '../models/userModel';
+import { OAuth2Client } from 'google-auth-library';
+import { getTokensForUser } from '../utils/getTokensForUser';
 
 
 const router = express.Router();
@@ -77,6 +79,39 @@ router.post('/refresh-token/:userId', verifyRefreshToken, async (req: Request, r
     next(error); 
   }
 });
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+router.post('/google-login', async (req: Request, res: Response, next: Function) => {
+  try {
+    const { token } = req.body;
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const email = payload?.email;
+    const googleId = payload?.sub; 
+    let user = await User.findOne({ email });
+
+    if (!user) {
+     
+      user = await User.create({
+        email,
+        name: payload?.name || '', 
+        image: payload?.picture || '', 
+        googleId, 
+        password: 'google-signin', 
+      });
+    }
+
+    const tokens = await getTokensForUser(user);
+    res.status(200).send(tokens);
+  } catch (err) {
+    next(err); 
+  }
+});
+
 
 
 

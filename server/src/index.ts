@@ -56,6 +56,10 @@ app.use('/posts', postRoutes);
 app.use('/comments', commentRoutes);
 app.use('/likes', likeRoutes);
 
+app.get('/api/google-client-id', (req, res) => {
+  res.json({ clientId: process.env.GOOGLE_CLIENT_ID });
+});
+
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript with Express!');
