@@ -60,6 +60,16 @@ app.get('/api/google-client-id', (req, res) => {
   res.json({ clientId: process.env.GOOGLE_CLIENT_ID });
 });
 
+app.get('/api/openai-api-key', (req: Request, res: Response) => {
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+
+  if (openaiApiKey) {
+    res.json({ apiKey: openaiApiKey });
+  } else {
+    res.status(500).json({ error: 'OpenAI API key not found in environment variables.' });
+  }
+});
+
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript with Express!');
