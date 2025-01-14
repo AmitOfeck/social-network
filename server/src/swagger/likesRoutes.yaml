@@ -1,0 +1,135 @@
+paths:
+  /likes/{postId}:
+    post:
+      summary: Like a post
+      description: Add a like to a specific post
+      tags:
+        - Likes
+      security:
+        - accessTokenAuth: []
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: The ID of the post to like
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authorId:
+                  type: string
+                  description: The ID of the user who is liking the post
+      responses:
+        '201':
+          description: Like added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+        '400':
+          description: Bad request, invalid or missing parameters
+        '401':
+          description: Unauthorized, invalid token or missing token
+        '500':
+          description: Server error when adding like
+    delete:
+      summary: Remove like from a post
+      description: Remove a like from a specific post
+      tags:
+        - Likes
+      security:
+        - accessTokenAuth: []
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: The ID of the post to remove the like from
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authorId:
+                  type: string
+                  description: The ID of the user who is removing the like
+      responses:
+        '200':
+          description: Like removed successfully
+        '400':
+          description: Bad request, invalid or missing parameters
+        '401':
+          description: Unauthorized, invalid token or missing token
+        '500':
+          description: Server error when removing like
+  /likes/{postId}/isLike:
+    post:
+      summary: Check if a post is liked by the user
+      description: Check if a specific post is liked by the given user
+      tags:
+        - Likes
+      security:
+        - accessTokenAuth: []
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: The ID of the post to check
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                authorId:
+                  type: string
+                  description: The ID of the user to check if they liked the post
+      responses:
+        '200':
+          description: Returns like status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isLiked:
+                    type: boolean
+                    description: Whether the post is liked by the user
+        '400':
+          description: Bad request, invalid or missing parameters
+        '401':
+          description: Unauthorized, invalid token or missing token
+        '500':
+          description: Server error when checking like status
+
+components:
+  securitySchemes:
+    accessTokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    Like:
+      type: object
+      properties:
+        authorId:
+          type: string
+          description: ID of the user who liked the post
+        postId:
+          type: string
+          description: ID of the post that is liked
+        date:
+          type: string
+          format: date-time
+          description: Date when the like was added
