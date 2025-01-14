@@ -8,6 +8,9 @@ export const registerUser = async (req: Request, res: Response) => {
     const imagePath = req.file ? req.file.path : null; 
 
     const result = await registerUserService(email, password, name, imagePath);
+    if (result.error) {
+       return res.status(400).json({ error: result.error });  
+    }
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ error: 'Error registering user' });
