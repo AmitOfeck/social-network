@@ -8,6 +8,8 @@ import likeRoutes from './routes/likeRoutes';
 import bodyParser from 'body-parser';
 import * as path from'path';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger/swaggerConfig';
 
 
 const envPath = path.resolve(__dirname, `../config/.env.${process.env.NODE_ENV || 'local'}`);
@@ -55,6 +57,8 @@ app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/comments', commentRoutes);
 app.use('/likes', likeRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/api/google-client-id', (req, res) => {
   res.json({ clientId: process.env.GOOGLE_CLIENT_ID });
