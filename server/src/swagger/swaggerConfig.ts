@@ -13,6 +13,16 @@ const options = {
         url: 'http://localhost:4000',
       },
     ],
+    components: {
+      securitySchemes: {
+        accessTokenAuth: {
+          type: 'apiKey',
+          name: 'Authorization',
+          in: 'header',
+          description: 'Access token for authorization (without "Bearer " prefix)',
+        },
+      },
+    },
   },
   apis: ['./src/swagger/*.yaml'], // Path to the API docs
 };
