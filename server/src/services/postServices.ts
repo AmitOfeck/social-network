@@ -14,7 +14,7 @@ import { deleteFileFromFolder } from '../utils/deleteFile';
  */
 export const createPost = async (req: Request, res: Response): Promise<void> => {
     const { authorId, content } = req.body;
-    
+
     const newPost = new Post({
       authorId,
       content,
