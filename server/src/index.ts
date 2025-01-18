@@ -27,6 +27,7 @@ app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 
+if (process.env.NODE_ENV !== 'test') {
 mongoose
   .connect(process.env.MONGODB_URI as string) 
   .then(() => {
@@ -35,6 +36,7 @@ mongoose
   .catch((err) => {
     console.log('Error connecting to MongoDB:', err);
   });
+}
 
 app.use(cors());
 app.use(express.json());
@@ -79,6 +81,11 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript with Express!');
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+export default app;
+
