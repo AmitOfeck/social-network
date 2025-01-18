@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test jest --config ./src/tests/jest.config.ts --rootDir ./src",
     "start": "NODE_ENV=local ts-node src/index.ts",
     "start:local": "NODE_ENV=local ts-node src/index.ts",
     "start:production": "NODE_ENV=production ts-node src/index.ts",
@@ -32,11 +32,17 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.7",
+    "@types/mongodb-memory-server": "^1.8.0",
     "@types/multer": "^1.4.12",
     "@types/node": "^22.9.0",
+    "@types/supertest": "^6.0.2",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
