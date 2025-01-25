@@ -50,9 +50,6 @@ paths:
                 content:
                   type: string
                   description: The content of the comment
-                authorId:
-                  type: string
-                  description: The ID of the author (user)
       responses:
         201:
           description: Comment successfully created
