@@ -47,8 +47,7 @@ export const checkLikeStatus = async (postId: string, authorId: string): Promise
         headers: {
           'Authorization': `${token}`,
           'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({ "authorId":authorId }), 
+        }
       });
   
       if (!response.ok) {
