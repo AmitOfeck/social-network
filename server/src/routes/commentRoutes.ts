@@ -1,6 +1,7 @@
 import express from 'express';
 import { createComment , getCommentsByPostId } from '../controllers/commentController';
 import verifyToken from '../utils/verifyToken'; 
+import { extractUserIdFromToken } from '../utils/extractUserIdFromToken';
 
 
 const router = express.Router();
@@ -21,7 +22,13 @@ router.get('/:postId', verifyToken, (req, res) => {
 
 router.post('/:postId', verifyToken , (req, res) => {
     const { postId } = req.params;
-    const { content, authorId } = req.body;
+    const { content} = req.body;
+    const token = req.header('Authorization');
+    if (!token) {
+      res.status(401).json({ error: 'Access denied' });
+      return; 
+    }
+    const authorId = extractUserIdFromToken(token);
   
     createComment(postId, content, authorId)
       .then((comment) => {
