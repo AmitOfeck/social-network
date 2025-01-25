@@ -27,13 +27,13 @@ router.post('/:postId', verifyToken , (req, res) => {
 
 router.delete('/:postId', verifyToken , (req, res) => {
     const { postId } = req.params;
-    const { authorId } = req.body;
-    // const token = req.header('Authorization');
-    // if (!token) {
-    //   res.status(401).json({ error: 'Access denied' });
-    //   return; 
-    // }
-    // const authorId = extractUserIdFromToken(token);
+    //const { authorId } = req.body;
+    const token = req.header('Authorization');
+    if (!token) {
+      res.status(401).json({ error: 'Access denied' });
+      return; 
+    }
+    const authorId = extractUserIdFromToken(token);
 
   
     deleteLike(postId, authorId)
