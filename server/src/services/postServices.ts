@@ -6,6 +6,7 @@ import { saveFileToFolder } from '../utils/saveFile';
 import path from 'path';
 import fs from 'fs';
 import { deleteFileFromFolder } from '../utils/deleteFile';
+import { extractUserIdFromToken } from '../utils/extractUserIdFromToken';
 
 
 /**
@@ -13,7 +14,13 @@ import { deleteFileFromFolder } from '../utils/deleteFile';
  * @param res 
  */
 export const createPost = async (req: Request, res: Response): Promise<void> => {
-    const { authorId, content } = req.body;
+    const {content } = req.body;
+    const token = req.header('Authorization');
+    if (!token) {
+      res.status(401).json({ error: 'Access denied' });
+      return; 
+    }
+    const authorId = extractUserIdFromToken(token);
 
     const newPost = new Post({
       authorId,
