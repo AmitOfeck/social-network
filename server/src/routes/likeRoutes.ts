@@ -1,12 +1,18 @@
 import express from 'express';
 import { createLike , deleteLike , isLike } from '../controllers/likeController';
+import { extractUserIdFromToken } from '../utils/extractUserIdFromToken';
 import verifyToken from '../utils/verifyToken'; 
 
 const router = express.Router();
 
 router.post('/:postId', verifyToken , (req, res) => {
     const { postId } = req.params;
-    const { authorId } = req.body;
+    const token = req.header('Authorization');
+    if (!token) {
+      res.status(401).json({ error: 'Access denied' });
+      return; 
+    }
+    const authorId = extractUserIdFromToken(token);
   
     createLike(postId, authorId)
       .then((like) => {
@@ -20,7 +26,13 @@ router.post('/:postId', verifyToken , (req, res) => {
 
 router.delete('/:postId', verifyToken , (req, res) => {
     const { postId } = req.params;
-    const { authorId } = req.body;
+    const token = req.header('Authorization');
+    if (!token) {
+      res.status(401).json({ error: 'Access denied' });
+      return; 
+    }
+    const authorId = extractUserIdFromToken(token);
+
   
     deleteLike(postId, authorId)
       .then(() => {
@@ -34,7 +46,13 @@ router.delete('/:postId', verifyToken , (req, res) => {
 
   router.post('/:postId/isLike', verifyToken, (req, res) => {
     const { postId } = req.params; 
-    const { authorId } = req.body;  
+    //const { authorId } = req.body;  
+    const token = req.header('Authorization');
+    if (!token) {
+      res.status(401).json({ error: 'Access denied' });
+      return; 
+    }
+    const authorId = extractUserIdFromToken(token);
   
     isLike(postId, authorId, res); 
   });

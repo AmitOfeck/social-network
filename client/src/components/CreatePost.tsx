@@ -44,7 +44,6 @@ const CreatePost = () => {
 
     try {
       const formData = new FormData();
-      formData.append('authorId', authorId);
       formData.append('content', content);
       if (photo){
         formData.append('photo', photo);

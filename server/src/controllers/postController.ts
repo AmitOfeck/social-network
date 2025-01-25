@@ -9,7 +9,7 @@ import { deleteFileFromFolder } from '../utils/deleteFile';
 
 
 export const createPostController = async (req: Request, res: Response): Promise<void> => {
-    const requiredFields = ['authorId', 'content'];
+    const requiredFields = ['content'];
     
     if (!hasAllFields(req, res, requiredFields)) {
       return;  

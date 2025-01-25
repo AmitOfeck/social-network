@@ -3,14 +3,14 @@ import { handle401AndRetry } from "./handle401Error";
 export const createCommentUtils = async (postId: string, content: string) : Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken');
-      const authorId = localStorage.getItem('userId');
+      //const authorId = localStorage.getItem('userId');
       const response = await fetch(`http://localhost:4000/comments/${postId}`, {
         method: 'POST',
         headers: {
           'Authorization':`${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "content":content , "authorId":authorId }),
+        body: JSON.stringify({ "content":content}),
       });
   
       if (!response.ok) {
