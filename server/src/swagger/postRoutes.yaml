@@ -12,9 +12,6 @@ paths:
             schema:
               type: object
               properties:
-                authorId:
-                  type: string
-                  description: ID of the author creating the post
                 content:
                   type: string
                   description: Content of the post
