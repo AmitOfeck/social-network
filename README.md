@@ -22,7 +22,7 @@
 
 2. **Install dependencies**
 
-`npm install`
+- `npm install`
 
 3. **Configuration**
 
@@ -44,8 +44,8 @@ This will start the server locally on port 4000.
 
 5. **Running the Client**
 
-`cd client`
-`npm start`
+- `cd client`
+- `npm start`
 
 This will start the frontend locally at http://localhost:3000/login.
 
