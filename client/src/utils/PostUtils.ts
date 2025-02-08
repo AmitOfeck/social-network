@@ -118,6 +118,41 @@ export const createPost = async (formData: FormData): Promise<any> => {
       throw error; 
     }
   };
+
+  export const fetchGeminiApiKey = async (): Promise<string | null> => {
+    try {
+      const response = await fetch('http://localhost:4000/api/gemini-api-key');
+      const data = await response.json();
+      return data.apiKey || null;
+    } catch (error) {
+      console.error('Error fetching Gemini API key:', error);
+      return null;
+    }
+  };
+
+  
+
+  export const fetchGeminiFact = async (): Promise<string | null> => {
+  
+    try {
+      const response = await fetch('http://localhost:4000/posts/api/gemini-fact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({
+        //   prompt: `Give me a unique and interesting fun fact that most people don't know. Make sure it is different from previous facts.`
+        // })
+      });
+  
+      const data = await response.json();
+  
+      return data?.fact || 'No fact found';
+    } catch (error) {
+      console.error('Error fetching fact from Gemini:', error);
+      return null;
+    }
+  };
+  
+  
   
   
   
