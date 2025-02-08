@@ -23,7 +23,6 @@ router.post('/api/gemini-fact', async (req, res) => {
     const topics = [ "sport", "science", "geography", "animals", "history", "technology", "space", "food", "art", "music"]; 
     const randomTopic = topics[Math.floor(Math.random() * topics.length)];
     const prompt = `Tell me a fun fact. about ${randomTopic}.`;
-    //console.log(prompt)
   
     try {
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
@@ -39,7 +38,7 @@ router.post('/api/gemini-fact', async (req, res) => {
             temperature: 1.2,
             topP: 0.9,
             topK: 50,
-            candidateCount: 3 
+            candidateCount: 8 
           }
         })
       });
@@ -50,8 +49,9 @@ router.post('/api/gemini-fact', async (req, res) => {
         throw new Error(`Gemini API Error: ${JSON.stringify(data)}`);
       }
   
-      const fact = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from API';
-      
+      const randomIndex = Math.floor(Math.random() * data.candidates.length);
+      const fact = data.candidates?.[randomIndex]?.content?.parts?.[0]?.text || 'No response from API';
+            
       res.json({ fact });
     } catch (error) {
       console.error('Error fetching fact from Gemini API:', error);
