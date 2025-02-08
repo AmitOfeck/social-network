@@ -94,13 +94,13 @@ describe('User API Endpoints', () => {
 //       expect(res.statusCode).toEqual(404);
 //     });
 
-    // it('should delete the user', async () => {
-    //   const res = await request(app)
-    //     .delete(`/users/${userId}`)
-    //     .set('Authorization', `${accessToken}`);
+    it('should delete the user', async () => {
+      const res = await request(app)
+        .delete(`/users/${userId}`)
+        .set('Authorization', `${accessToken}`);
 
-    //   expect(res.statusCode).toEqual(200);
-    // });
+      expect(res.statusCode).toEqual(200);
+    });
 
   });
 });

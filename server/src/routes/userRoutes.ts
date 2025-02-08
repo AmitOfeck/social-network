@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { registerUser, loginUser , getUser , updateUserController } from '../controllers/userController';
+import { registerUser, loginUser , getUser , updateUserController , deleteUserController } from '../controllers/userController';
 import { authorizeUser } from '../middleware/authorizeUser';
 import verifyToken from '../utils/verifyToken'; 
 import { verifyRefreshToken } from '../utils/verifyToken';
@@ -112,6 +112,7 @@ router.post('/google-login', async (req: Request, res: Response, next: Function)
   }
 });
 
+router.delete('/:id', verifyToken, authorizeUser, deleteUserController);
 
 
 
