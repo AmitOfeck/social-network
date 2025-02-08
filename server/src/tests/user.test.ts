@@ -70,8 +70,6 @@ describe('User API Endpoints', () => {
         .field('name', 'Updated Test User')
         .attach('image', path.resolve(__dirname, 'assets/test-image.jpg'));
 
-        console.log(res.body)
-
       expect(res.statusCode).toEqual(200);
       expect(res.body).toHaveProperty('user');
       expect(res.body.user).toHaveProperty('name', 'Updated Test User');
@@ -86,13 +84,13 @@ describe('User API Endpoints', () => {
       expect(res.body).toHaveProperty('accessToken');
     });
 
-//     it('should return 404 for an unknown user', async () => {
-//       const res = await request(app)
-//         .get('/users/unknownUserId')
-//         .set('Authorization', `Bearer ${accessToken}`);
+    // it('should return 404 for an unknown user', async () => {
+    //   const res = await request(app)
+    //     .get('/users/unknownUserId')
+    //     .set('Authorization', `${accessToken}`);
 
-//       expect(res.statusCode).toEqual(404);
-//     });
+    //   expect(res.statusCode).toEqual(404);
+    // });
 
     it('should delete the user', async () => {
       const res = await request(app)
