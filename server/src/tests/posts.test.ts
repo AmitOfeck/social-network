@@ -14,7 +14,6 @@ beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_URI as string);
   }
 
-  // Register a new user
   const registerResponse = await request(app)
     .post('/users/register')
     .field('email', 'testuser@example.com')
@@ -51,22 +50,23 @@ describe('Post API Endpoints', () => {
       .field('content', 'This is a test post')
       .attach('photo', path.resolve(__dirname, 'assets/test-image.jpg'));
 
-    console.log(res.body);
-
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('post');
     postId = res.body.post._id;
   });
 
-  // it('should get all posts', async () => {
-  //   const res = await request(app)
-  //     .get('/posts')
-  //     .set('Authorization', `${accessToken}`);
+  it('should get all posts', async () => {
+    const res = await request(app)
+      .get('/posts')
+      .set('Authorization', `${accessToken}`);
 
-  //   expect(res.statusCode).toEqual(200);
-  //   expect(res.body).toHaveProperty('posts');
-  //   expect(res.body.posts.length).toBeGreaterThan(0);
-  // });
+      console.log(res.body);
+      
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('posts');
+    expect(res.body.posts.length).toBeGreaterThan(0);
+  });
 
   // it('should get a post by ID', async () => {
   //   const res = await request(app)
