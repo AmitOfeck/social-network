@@ -5,6 +5,7 @@ import { fetchUser } from '../utils/fetchUser';
 import { usePosts } from './contexts/PostContext';
 import { Link } from 'react-router-dom'; 
 import { fetchImageUrl } from '../utils/fetchImageUrl';
+import { fetchGeminiFact } from '../utils/PostUtils';
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
@@ -69,16 +70,23 @@ const CreatePost = () => {
     setPhoto(file);
   };
 
+  const handleGenerateFact = async () => {
+    const fact = await fetchGeminiFact();
+    if (fact) {
+      setContent(fact);
+    }
+  };
+
   return (
     <div className="create-post-container">
       <div className="header2">
-      <Link to={`/profile/${user? user._id : ""}`} className="avatar-link2">
-      <img
-          src={user?.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
-          alt="User Avatar"
-          className="avatar2"
-        />
-      </Link>
+        <Link to={`/profile/${user ? user._id : ""}`} className="avatar-link2">
+          <img
+            src={user?.image ? `${fetchImageUrl(user.image)}` : `https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg`}
+            alt="User Avatar"
+            className="avatar2"
+          />
+        </Link>
         <h2>Create a New Post</h2>
       </div>
       <form onSubmit={handleSubmit} className="create-post-form">
@@ -93,6 +101,9 @@ const CreatePost = () => {
             placeholder="Share your thoughts..."
           />
         </div>
+        <button type="button" className="fact-button" onClick={handleGenerateFact}>
+          Generate Random Fact
+        </button>
         <div className="input-group">
           <label htmlFor="photo" className="photo-label">
             Add a Photo
