@@ -93,12 +93,12 @@ describe('User API Endpoints', () => {
   });
 
   // it('should return 404 for an unknown user', async () => {
-    //   const res = await request(app)
-    //     .get('/users/unknownUserId')
-    //     .set('Authorization', ⁠ ${accessToken} ⁠);
+  //     const res = await request(app)
+  //       .get('/users/unknownUserId')
+  //       .set('Authorization', `${accessToken}`);
 
-    //   expect(res.statusCode).toEqual(404);
-    // });
+  //     expect(res.statusCode).toEqual(404);
+  //   });
 
   it('should delete the user', async () => {
     expect(userId).toBeDefined();
