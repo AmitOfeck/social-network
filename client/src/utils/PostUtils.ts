@@ -138,9 +138,9 @@ export const createPost = async (formData: FormData): Promise<any> => {
       const response = await fetch('http://localhost:4000/posts/api/gemini-fact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: "Write a random fun fact." 
-        })
+        // body: JSON.stringify({
+        //   prompt: `Give me a unique and interesting fun fact that most people don't know. Make sure it is different from previous facts.`
+        // })
       });
   
       const data = await response.json();
