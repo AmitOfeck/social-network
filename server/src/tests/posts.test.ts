@@ -59,8 +59,6 @@ describe('Post API Endpoints', () => {
     const res = await request(app)
       .get('/posts')
       .set('Authorization', `${accessToken}`);
-
-      console.log(res.body);
       
 
     expect(res.statusCode).toEqual(200);
@@ -68,32 +66,32 @@ describe('Post API Endpoints', () => {
     expect(res.body.posts.length).toBeGreaterThan(0);
   });
 
-  // it('should get a post by ID', async () => {
-  //   const res = await request(app)
-  //     .get(`/posts/${postId}`)
-  //     .set('Authorization', `${accessToken}`);
+  it('should get a post by ID', async () => {
+    const res = await request(app)
+      .get(`/posts/${postId}`)
+      .set('Authorization', `${accessToken}`);
 
-  //   expect(res.statusCode).toEqual(200);
-  //   expect(res.body).toHaveProperty('_id', postId);
-  // });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('_id', postId);
+  });
 
-  // it('should update a post by ID', async () => {
-  //   const res = await request(app)
-  //     .put(`/posts/${postId}`)
-  //     .set('Authorization', `${accessToken}`)
-  //     .field('content', 'This is an updated test post')
-  //     .attach('photo', path.resolve(__dirname, 'assets/test-image.jpg'));
+  it('should update a post by ID', async () => {
+    const res = await request(app)
+      .put(`/posts/${postId}`)
+      .set('Authorization', `${accessToken}`)
+      .field('content', 'This is an updated test post')
+      .attach('photo', path.resolve(__dirname, 'assets/test-image.jpg'));
 
-  //   expect(res.statusCode).toEqual(200);
-  //   expect(res.body).toHaveProperty('post');
-  //   expect(res.body.post).toHaveProperty('content', 'This is an updated test post');
-  // });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('post');
+    expect(res.body.post).toHaveProperty('content', 'This is an updated test post');
+  });
 
-  // it('should delete a post by ID', async () => {
-  //   const res = await request(app)
-  //     .delete(`/posts/${postId}`)
-  //     .set('Authorization', `${accessToken}`);
+  it('should delete a post by ID', async () => {
+    const res = await request(app)
+      .delete(`/posts/${postId}`)
+      .set('Authorization', `${accessToken}`);
 
-  //   expect(res.statusCode).toEqual(200);
-  // });
+    expect(res.statusCode).toEqual(200);
+  });
 });
