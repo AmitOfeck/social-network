@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { registerUserService, loginUserService , getUserByIdService , updateUserService } from '../services/userServices';
+import { registerUserService, loginUserService , getUserByIdService , updateUserService , deleteUserService } from '../services/userServices';
 
 
 export const registerUser = async (req: Request, res: Response) => {
@@ -70,5 +70,23 @@ export const updateUserController = async (req: Request, res: Response): Promise
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ error: 'Failed to update user' });
+  }
+};
+
+export const deleteUserController = async (req: Request, res: Response): Promise<void> => {
+  const { id: userId } = req.params;
+
+  try {
+    const result = await deleteUserService(userId);
+
+    if (result.error) {
+      res.status(404).json({ error: result.error });
+      return;
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Failed to delete user' });
   }
 };

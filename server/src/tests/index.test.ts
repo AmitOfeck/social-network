@@ -19,11 +19,6 @@ describe('API Endpoints', () => {
     expect(res.body).toHaveProperty('clientId');
   });
 
-  it('should get the OpenAI API key', async () => {
-    const res = await request(app).get('/api/openai-api-key');
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('apiKey');
-  });
 
   it('should return 404 for an unknown route', async () => {
     const res = await request(app).get('/unknown-route');

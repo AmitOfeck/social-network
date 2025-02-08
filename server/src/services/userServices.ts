@@ -107,3 +107,24 @@ export const updateUserService = async (userId: string, name?: string, file?: Ex
     throw new Error('Failed to update user');
   }
 };
+
+
+export const deleteUserService = async (userId: string): Promise<any> => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return { error: 'User not found' };
+  }
+
+  if (user.image) {
+    const destinationFolder = path.join(__dirname, '../uploads');
+    deleteFileFromFolder(user.image, destinationFolder);
+  }
+
+  try {
+    await user.deleteOne();
+    return { message: 'User deleted successfully' };
+  } catch (error) {
+    throw new Error('Failed to delete user');
+  }
+};
