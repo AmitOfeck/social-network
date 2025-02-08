@@ -2,24 +2,25 @@ import request from 'supertest';
 import app from '../index';
 import mongoose from 'mongoose';
 import path from 'path';
-import User from '../models/userModel';
+
+let userId: string;
+let accessToken: string;
+let refreshToken: string;
 
 beforeAll(async () => {
-  if (!mongoose.connection.readyState) {
-    await mongoose.connect(process.env.MONGODB_URI as string);
-  }
+  await mongoose.connect(process.env.MONGODB_URI as string);
 });
 
 afterAll(async () => {
-  await User.deleteOne({ email: 'testuser@example.com' });  
-  await mongoose.disconnect();
+  if (userId && accessToken) {
+    await request(app)
+      .delete(`/users/${userId}`)
+      .set('Authorization', `${accessToken}`);
+  }
+  await mongoose.connection.close();
 });
 
 describe('User API Endpoints', () => {
-  let userId: string;
-  let accessToken: string;
-  let refreshToken: string;
-
   it('should register a new user', async () => {
     const res = await request(app)
       .post('/users/register')
@@ -30,10 +31,13 @@ describe('User API Endpoints', () => {
 
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('user');
+    
     userId = res.body.user._id;
   });
 
   it('should login the user', async () => {
+    expect(userId).toBeDefined();
+
     const res = await request(app)
       .post('/users/login')
       .send({
@@ -44,61 +48,66 @@ describe('User API Endpoints', () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('accessToken');
     expect(res.body).toHaveProperty('refreshToken');
+
     accessToken = res.body.accessToken;
     refreshToken = res.body.refreshToken;
   });
 
+  it('should get user details', async () => {
+    expect(userId).toBeDefined();
+    expect(accessToken).toBeDefined();
 
+    const res = await request(app)
+      .get(`/users/${userId}`)
+      .set('Authorization', `${accessToken}`);
 
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('_id', userId);
+  });
 
+  it('should update user details', async () => {
+    expect(userId).toBeDefined();
+    expect(accessToken).toBeDefined();
 
-  describe('Authenticated User Actions', () => {
+    const res = await request(app)
+      .put(`/users/${userId}`)
+      .set('Authorization', `${accessToken}`)
+      .field('name', 'Updated Test User')
+      .attach('image', path.resolve(__dirname, 'assets/test-image.jpg'));
 
-    it('should get user details', async () => {
-      const res = await request(app)
-        .get(`/users/${userId}`)
-        .set('Authorization', `${accessToken}`);
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('user');
+    expect(res.body.user).toHaveProperty('name', 'Updated Test User');
+  });
 
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toHaveProperty('_id', userId);
-    });
+  it('should refresh the access token', async () => {
+    expect(userId).toBeDefined();
+    expect(refreshToken).toBeDefined();
 
-    it('should update user details', async () => {
-      const res = await request(app)
-        .put(`/users/${userId}`)
-        .set('Authorization', `${accessToken}`)
-        .field('name', 'Updated Test User')
-        .attach('image', path.resolve(__dirname, 'assets/test-image.jpg'));
+    const res = await request(app)
+      .post(`/users/refresh-token/${userId}`)
+      .set('Authorization', `${refreshToken}`);
 
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toHaveProperty('user');
-      expect(res.body.user).toHaveProperty('name', 'Updated Test User');
-    });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('accessToken');
+  });
 
-    it('should refresh the access token', async () => {
-      const res = await request(app)
-        .post(`/users/refresh-token/${userId}`)
-        .set('Authorization', `${refreshToken}`);
-
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toHaveProperty('accessToken');
-    });
-
-    // it('should return 404 for an unknown user', async () => {
+  // it('should return 404 for an unknown user', async () => {
     //   const res = await request(app)
     //     .get('/users/unknownUserId')
-    //     .set('Authorization', `${accessToken}`);
+    //     .set('Authorization', ⁠ ${accessToken} ⁠);
 
     //   expect(res.statusCode).toEqual(404);
     // });
 
-    it('should delete the user', async () => {
-      const res = await request(app)
-        .delete(`/users/${userId}`)
-        .set('Authorization', `${accessToken}`);
+  it('should delete the user', async () => {
+    expect(userId).toBeDefined();
+    expect(accessToken).toBeDefined();
 
-      expect(res.statusCode).toEqual(200);
-    });
+    const res = await request(app)
+      .delete(`/users/${userId}`)
+      .set('Authorization', `${accessToken}`);
 
+    expect(res.statusCode).toEqual(200);
   });
 });

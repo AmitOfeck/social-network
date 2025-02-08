@@ -1,9 +1,10 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../index';
+import path from 'path';
+
 import User from '../models/userModel';
 import Post from '../models/postModel';
-import path from 'path';
 
 let userId: string;
 let postId: string;
@@ -59,7 +60,6 @@ describe('Post API Endpoints', () => {
     const res = await request(app)
       .get('/posts')
       .set('Authorization', `${accessToken}`);
-      
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('posts');
