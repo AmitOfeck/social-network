@@ -7,7 +7,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
         throw new Error('No access token found');
       }
   
-      const response = await fetch('http://localhost:4000/posts', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -38,7 +38,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
         throw new Error('No access token found');
       }
   
-      const response = await fetch(`http://localhost:4000/posts/${postId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
         method: 'GET',
         headers: {
           'Authorization': `${token}`
@@ -67,7 +67,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
         throw new Error('No access token found');
       }
   
-      const response = await fetch(`http://localhost:4000/posts/${postId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `${token}`,
@@ -96,7 +96,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
         throw new Error('No access token found');
       }
   
-      const response = await fetch(`http://localhost:4000/posts/${postId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
         method: 'PUT', 
         headers: {
           'Authorization': `${token}`
@@ -121,7 +121,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
 
   export const fetchGeminiApiKey = async (): Promise<string | null> => {
     try {
-      const response = await fetch('http://localhost:4000/api/gemini-api-key');
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/gemini-api-key`);
       const data = await response.json();
       return data.apiKey || null;
     } catch (error) {
@@ -135,7 +135,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
   export const fetchGeminiFact = async (): Promise<string | null> => {
   
     try {
-      const response = await fetch('http://localhost:4000/posts/api/gemini-fact', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/api/gemini-fact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         // body: JSON.stringify({

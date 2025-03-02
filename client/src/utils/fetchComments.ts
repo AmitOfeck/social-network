@@ -3,7 +3,7 @@ import { handle401AndRetry } from "./handle401Error";
 export const fetchComments = async (postId: string): Promise<any> => {
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await fetch(`http://localhost:4000/comments/${postId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/comments/${postId}`, {
         method: 'GET',
         headers: {
           'Authorization':`${token}` 

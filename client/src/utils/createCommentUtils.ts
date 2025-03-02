@@ -4,7 +4,7 @@ export const createCommentUtils = async (postId: string, content: string) : Prom
     try {
       const token = localStorage.getItem('accessToken');
       //const authorId = localStorage.getItem('userId');
-      const response = await fetch(`http://localhost:4000/comments/${postId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/comments/${postId}`, {
         method: 'POST',
         headers: {
           'Authorization':`${token}`,

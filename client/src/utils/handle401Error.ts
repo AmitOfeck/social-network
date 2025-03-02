@@ -10,7 +10,7 @@ export const handle401AndRetry = async <T>( originalFunction: AsyncFunction<T>, 
       throw new Error('Refresh token is missing. Logging out...');
     }
 
-    const refreshResponse = await fetch(`http://localhost:4000/users/refresh-token/${userId}`, {
+    const refreshResponse = await fetch(`${process.env.REACT_APP_API_URL}/users/refresh-token/${userId}`, {
       method: 'POST',
       headers: {
         'Authorization': `${refreshToken}`,

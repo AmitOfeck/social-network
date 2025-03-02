@@ -1,6 +1,6 @@
 export const registerUser = async (formData: FormData) => { // קבלת FormData כפרמטר
   try {
-    const response = await fetch('http://localhost:4000/users/register', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
       method: 'POST',
       body: formData, 
     });

@@ -7,7 +7,7 @@ export const fetchUser = async (userId: string): Promise<any> => {
       if (!token) {
         throw new Error('No access token found');
       }
-      const response = await fetch(`http://localhost:4000/users/${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `${token}`,  

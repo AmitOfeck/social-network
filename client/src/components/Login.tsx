@@ -18,7 +18,7 @@ const Login = () => {
   useEffect(() => {
     const fetchClientId = async () => {
       try {
-        const response = await fetch('http://localhost:4000/api/google-client-id'); 
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/google-client-id`); 
         const data = await response.json();  
         setClientId(data.clientId);  
       } catch (err) {
@@ -55,7 +55,7 @@ const Login = () => {
   const handleGoogleLoginSuccess = async (response: any) => {
     try {
       const googleToken = response.credential;
-      const result = await fetch('http://localhost:4000/users/google-login', {
+      const result = await fetch(`${process.env.REACT_APP_API_URL}/users/google-login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: googleToken }),

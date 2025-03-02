@@ -1,4 +1,4 @@
-export const fetchImageUrl = (photoUrl: string | undefined, baseUrl: string = 'http://localhost:4000/images/'): string | null => {
+export const fetchImageUrl = (photoUrl: string | undefined, baseUrl: string = `${process.env.REACT_APP_API_URL}/images/`): string | null => {
   if (!photoUrl) {
     return 'https://p7.hiclipart.com/preview/691/765/226/computer-icons-person-anonymous.jpg'; 
   }

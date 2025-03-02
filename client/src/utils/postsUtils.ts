@@ -8,7 +8,7 @@ export const fetchPosts = async (skip = 0, limit = 3) : Promise<any> => {
     }
 
     const response = await fetch(
-      `http://localhost:4000/posts?skip=${skip}&limit=${limit}`,
+      `${process.env.REACT_APP_API_URL}/posts?skip=${skip}&limit=${limit}`,
       {
         method: 'GET',
         headers: {
@@ -43,7 +43,7 @@ export const getPostsByAuthorId = async (authorId: string, skip = 0, limit = 3) 
     }
 
     const response = await fetch(
-      `http://localhost:4000/posts/author/${authorId}?skip=${skip}&limit=${limit}`,
+      `${process.env.REACT_APP_API_URL}/posts/author/${authorId}?skip=${skip}&limit=${limit}`,
       {
         method: 'GET',
         headers: {

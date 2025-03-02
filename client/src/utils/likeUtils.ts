@@ -1,6 +1,6 @@
 
 import { handle401AndRetry } from "./handle401Error";
-const API_URL = 'http://localhost:4000/likes';
+const API_URL = `${process.env.REACT_APP_API_URL}/likes`;
 
 export const sendLikeRequest = async (postId: string, authorId: string): Promise<any>  => {
   try {
