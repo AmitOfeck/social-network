@@ -6,24 +6,21 @@ import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
 import likeRoutes from './routes/likeRoutes';
 import bodyParser from 'body-parser';
-import * as path from 'path';
+import * as path from'path';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swaggerConfig';
-import fs from 'fs';
-import http from 'http';
-import https from 'https';
+
 
 const envPath = path.resolve(__dirname, `../config/.env.${process.env.NODE_ENV || 'local'}`);
 dotenv.config({ path: envPath });
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const HTTPS_PORT = process.env.HTTPS_PORT || 443;
+
 
 console.log('Loaded environment:', process.env.NODE_ENV);
 console.log('PORT:', process.env.PORT);
-console.log('HTTPS_PORT:', process.env.HTTPS_PORT);
 console.log('MONGODB_URI:', process.env.MONGODB_URI);
 
 const allowedOrigins = [
@@ -43,6 +40,7 @@ const allowedOrigins = [
   'https://node04.cs.colman.ac.il/api-docs',
 ];
 
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -56,47 +54,70 @@ app.use(cors({
   allowedHeaders: 'Content-Type, Authorization'
 }));
 
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.header("Cross-Origin-Embedder-Policy", "credentialless");  
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
+
+app.options('*', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
+
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(process.env.MONGODB_URI as string)
-    .then(() => {
-      console.log('Connected to MongoDB');
-    })
-    .catch((err) => {
-      console.log('Error connecting to MongoDB:', err);
-    });
+mongoose
+  .connect(process.env.MONGODB_URI as string) 
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.log('Error connecting to MongoDB:', err);
+  });
 }
+
+app.use(express.json());
+
+
+app.get('/images/:filename', (req, res) => {
+  const { filename } = req.params;
+  const suffix = filename.split('/').pop() 
+  const filePath = path.join(__dirname, 'uploads', suffix!);
+
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error(err);
+      res.status(404).send('Image not found');
+    }
+  });
+});
 
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 app.use('/comments', commentRoutes);
 app.use('/likes', likeRoutes);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/api/google-client-id', (req, res) => {
   res.json({ clientId: process.env.GOOGLE_CLIENT_ID });
 });
 
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript with Express!');
 });
 
-// יצירת שרת HTTP בפיתוח
-if (process.env.NODE_ENV !== 'production') {
-  http.createServer(app).listen(PORT, () => {
-    console.log(`HTTP Server running on http://localhost:${PORT}`);
-  });
-} else {
-  // יצירת שרת HTTPS בפרודקשן
-  const httpsOptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/node04.cs.colman.ac.il/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/node04.cs.colman.ac.il/fullchain.pem')
-  };
-
-  https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
-    console.log(`🚀 HTTPS Server running on https://node04.cs.colman.ac.il`);
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
   });
 }
 
