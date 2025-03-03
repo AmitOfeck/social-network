@@ -10,9 +10,6 @@ import * as path from'path';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swaggerConfig';
-import fs from 'fs';
-import http from 'http';
-import https from 'https';
 
 
 const envPath = path.resolve(__dirname, `../config/.env.${process.env.NODE_ENV || 'local'}`);
@@ -114,24 +111,13 @@ app.get('/api/google-client-id', (req, res) => {
 });
 
 
-// 🔹 HTTP לשרת פיתוח (אם זה לא production)
-if (process.env.NODE_ENV !== 'production') {
-  http.createServer(app).listen(PORT, () => {
-    console.log(`HTTP Server running on http://localhost:${PORT}`);
-  });
-}
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello, TypeScript with Express!');
+});
 
-// 🔹 HTTPS לשרת production
-if (process.env.NODE_ENV === 'production') {
-  const options = {
-    key: fs.readFileSync(path.resolve(__dirname, '../client-key.pem')), 
-    cert: fs.readFileSync(path.resolve(__dirname, '../client-cert.pem'))
-  };
-
-  const HTTPS_PORT = process.env.HTTPS_PORT || 443; 
-
-  https.createServer(options, app).listen(HTTPS_PORT, () => {
-    console.log(`🚀 HTTPS Server running on https://localhost:${HTTPS_PORT}`);
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
   });
 }
 
