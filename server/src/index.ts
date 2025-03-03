@@ -31,9 +31,12 @@ const allowedOrigins = [
   'http://node04.cs.colman.ac.il',
   'http://node04.cs.colman.ac.il:3000',
   'http://node04.cs.colman.ac.il:4000',
+  'http://node04.cs.colman.ac.il/api-docs',
+  'http://localhost:4000/api-docs', 
   'https://accounts.google.com',
   'https://www.googleapis.com'
 ];
+
 
 app.use(cors({
   origin: (origin, callback) => {
