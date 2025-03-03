@@ -9,10 +9,10 @@ const options = {
       description: 'API documentation for the Social Network project',
     },
     servers: [
-      // {
-      //   url: 'https://node04.cs.colman.ac.il:4000', 
-      //   description: 'Production server'
-      // },
+      {
+        url: 'http://10.10.246.4', 
+        description: 'Production server'
+      },
       {
         url: 'http://localhost:4000',
         description: 'Local server'

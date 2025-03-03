@@ -24,17 +24,20 @@ console.log('PORT:', process.env.PORT);
 console.log('MONGODB_URI:', process.env.MONGODB_URI);
 
 const allowedOrigins = [
+  process.env.DOMAIN_BASE,
+  `${process.env.DOMAIN_BASE}:3000`,
+  `${process.env.DOMAIN_BASE}:4000`,
+  `${process.env.DOMAIN_BASE}/api-docs`,
   'http://localhost:3000',
   'http://localhost:4000',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:4000',
-  'http://node04.cs.colman.ac.il',
-  'http://node04.cs.colman.ac.il:3000',
-  'http://node04.cs.colman.ac.il:4000',
-  'http://node04.cs.colman.ac.il/api-docs',
-  'http://localhost:4000/api-docs', 
   'https://accounts.google.com',
-  'https://www.googleapis.com'
+  'https://www.googleapis.com',
+  'https://node04.cs.colman.ac.il',
+  'https://node04.cs.colman.ac.il:3000',
+  'https://node04.cs.colman.ac.il:4000',
+  'https://node04.cs.colman.ac.il/api-docs',
 ];
 
 
