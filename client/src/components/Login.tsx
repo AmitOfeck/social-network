@@ -14,6 +14,13 @@ const Login = () => {
   
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedToken = localStorage.getItem('accessToken') || Cookies.get('refreshToken');
+    if (storedToken) {
+      navigate('/feed');  
+    }
+  }, [navigate]);
+
 
   useEffect(() => {
     const fetchClientId = async () => {
