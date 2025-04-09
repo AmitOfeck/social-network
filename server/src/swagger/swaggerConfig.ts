@@ -10,8 +10,12 @@ const options = {
     },
     servers: [
       {
-        url: 'http://10.10.246.4', 
-        description: 'Production server'
+        url: 'https://node04.cs.colman.ac.il', 
+        description: 'Prod (out of vpn)'
+      },
+      {
+        url: 'https://10.10.246.4', 
+        description: 'Prod (with vpn)'
       },
       {
         url: 'http://localhost:4000',

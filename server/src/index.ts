@@ -28,6 +28,10 @@ const allowedOrigins = [
   `${process.env.DOMAIN_BASE}:3000`,
   `${process.env.DOMAIN_BASE}:4000`,
   `${process.env.DOMAIN_BASE}/api-docs`,
+  'http://10.10.246.4/',
+  'https://10.10.246.4/',
+  'https://10.10.246.4/api-docs',
+  'http://10.10.246.4/api-docs',
   'http://localhost:3000',
   'http://localhost:4000',
   'http://127.0.0.1:3000',
@@ -35,6 +39,7 @@ const allowedOrigins = [
   'https://accounts.google.com',
   'https://www.googleapis.com',
   'https://node04.cs.colman.ac.il',
+  'http://node04.cs.colman.ac.il',
   'https://node04.cs.colman.ac.il:3000',
   'https://node04.cs.colman.ac.il:4000',
   'https://node04.cs.colman.ac.il/api-docs',
@@ -43,7 +48,8 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    //console.log("Incoming Request Origin:", origin);
+    if (!origin || allowedOrigins.includes(origin) || "undefined") {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -115,10 +121,11 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript with Express!');
 });
 
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-}
+// if (process.env.NODE_ENV !== 'test') {
+//   app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+//   });
+// }
 
 export default app;
+

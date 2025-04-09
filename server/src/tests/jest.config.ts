@@ -1,4 +1,7 @@
 import type { Config } from 'jest';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.test' });
 
 const config: Config = {
   preset: 'ts-jest',
@@ -8,7 +11,11 @@ const config: Config = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
-  rootDir: '../../', 
+  setupFiles: ['dotenv/config'], 
+  testTimeout: 30000, 
+  detectOpenHandles: true, 
+  forceExit: true, 
+  rootDir: process.cwd(), 
 };
 
 export default config;

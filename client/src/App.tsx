@@ -27,7 +27,7 @@ function Main() {
   return (
     <UserProvider>
     <div className="App">
-      {location.pathname !== '/login' && location.pathname !== '/register' && <NavBar />}
+    {location.pathname !== '/login' && location.pathname !== '/register'  && location.pathname !== '/'&& <NavBar />}
       <Routes>
         <Route path="/feed" element={<Feed />} /> 
         <Route path="/profile/:id" element={<PostProvider><PersonalPortal /></PostProvider>} />
@@ -35,6 +35,7 @@ function Main() {
         <Route path="/editPost/:postId" element={<PostProvider> <EditPost /> </PostProvider>} /> 
         <Route path="/editUser/:userId" element={<EditUser/>} />
         <Route path="/login" element={<Login />} /> 
+        <Route path="/" element={<Login />} /> 
         <Route path="/register" element={<Register />} />
       </Routes>
     </div>

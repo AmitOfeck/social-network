@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --config ./src/tests/jest.config.ts --rootDir ./src --runInBand",
-    "start": "NODE_ENV=local ts-node src/index.ts",
-    "start:local": "NODE_ENV=local ts-node src/index.ts",
-    "start:production": "NODE_ENV=production ts-node src/index.ts",
-    "build": "tsc && npm run copy-assets",
-    "copy-assets": "copyfiles -u 1 src/uploads/**/* dist",
-    "serve": "node dist/index.js"
-  },
+  "test": "NODE_ENV=test jest --config ./src/tests/jest.config.ts --rootDir ./src --runInBand",
+  "start": "NODE_ENV=local ts-node src/index.ts",
+  "start:local": "NODE_ENV=local ts-node src/index.ts",
+  "start:production": "NODE_ENV=production node dist/server.js",
+  "build": "tsc && npm run copy-assets",
+  "copy-assets": "copyfiles -u 1 src/uploads/**/* dist",
+  "serve": "NODE_ENV=production node dist/server.js",
+  "prod": "npm run build && npm run serve"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
